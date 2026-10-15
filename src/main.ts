@@ -35,6 +35,10 @@ const dlg = new DialogueController($('#dialogue'), $('#left .messenger'), voice,
 let fileTab: 'mine' | 'shared' = 'mine';
 let highlight: string | undefined;
 let map: OfficeMap | null = null;
+/** 이번 장면에서 확정한 선택 직전의 상태들 (↩ 선택 다시 하기) */
+const undoStack: { scene: SceneId; snap: string }[] = [];
+/** 마지막 선택 확정 시각: 더블클릭이 바로 '다음 장면' 버튼까지 누르지 않도록 */
+let lastActAt = 0;
 let goSeq = 0;
 
 const ctx: Ctx = {
@@ -43,10 +47,15 @@ const ctx: Ctx = {
   rerender: () => renderScene(),
   openFile: (id) => openFileModal(store, id),
   act: (fn) => {
+    const snap = JSON.stringify(store.state);
+    const nDecisions = Object.keys(store.state.decisions).length;
     const before = new Set(store.state.files.map((f) => f.id));
     const res0 = { slack: store.state.slack, ai: store.state.ai };
     const r = store.update(fn);
+    lastActAt = Date.now();
     floatCost(store.state.slack - res0.slack, store.state.ai - res0.ai);
+    // 새 선택이 확정됐을 때만 되돌리기 지점으로 저장
+    if (Object.keys(store.state.decisions).length > nDecisions) undoStack.push({ scene: store.state.scene, snap });
     const fresh = store.state.files.filter((f) => !before.has(f.id));
     if (fresh.length) {
       highlight = fresh[fresh.length - 1].id;
@@ -84,6 +93,27 @@ function floatCost(dSlack: number, dAi: number) {
   if (dAi) show('#topbar .ai-n', `✦ ${dAi > 0 ? '+' : ''}${dAi}`, dAi > 0);
 }
 
+function canUndo() {
+  const last = undoStack[undoStack.length - 1];
+  return !!last && last.scene === store.state.scene && store.state.scene !== 'ending';
+}
+
+/** 방금 확정한 선택을 되돌린다: 그 선택 직전 상태로 돌아가고 쓴 자원도 돌려받는다 */
+function undoLast() {
+  if (!canUndo()) return;
+  const { snap } = undoStack.pop()!;
+  const res0 = { slack: store.state.slack, ai: store.state.ai };
+  dlg.stopAll();
+  closeModal();
+  store.state = JSON.parse(snap);
+  store.update(() => {});
+  floatCost(store.state.slack - res0.slack, store.state.ai - res0.ai);
+  sound.sfx('select');
+  dlg.systemMessage('방금 선택을 되돌렸어요. 다시 골라 보세요.', 'info');
+  toast('↩ 선택을 되돌렸어요. 다시 골라 보세요.');
+  renderScene();
+}
+
 function renderFilesPanel() {
   renderFiles(store.state, fileTab, (id) => openFileModal(store, id), highlight);
 }
@@ -97,9 +127,11 @@ function renderScene() {
   const ws = $('#workspace');
   let root = ws.querySelector<HTMLElement>(':scope > .pc-window > .pc-body');
   if (!root) {
-    ws.innerHTML = `<div class="pc-window"><div class="pc-titlebar"><span class="dots"><i></i><i></i><i></i></span><b class="pc-title"></b><span class="pc-user">👩‍💼 윤진의 PC · 사내망</span></div><div class="pc-body"></div></div>`;
+    ws.innerHTML = `<div class="pc-window"><div class="pc-titlebar"><span class="dots"><i></i><i></i><i></i></span><b class="pc-title"></b><button type="button" class="pc-undo" data-testid="undo" hidden title="방금 확정한 선택을 취소하고 다시 고릅니다 (쓴 작업 여유·AI 이용권도 돌려받음)">↩ 선택 다시 하기</button><span class="pc-user">👩‍💼 윤진의 PC · 사내망</span></div><div class="pc-body"></div></div>`;
     root = ws.querySelector<HTMLElement>('.pc-body')!;
+    ws.querySelector('.pc-undo')!.addEventListener('click', undoLast);
   }
+  (ws.querySelector('.pc-undo') as HTMLElement).hidden = !canUndo();
   ws.querySelector('.pc-title')!.textContent = `🗂 AX 업무 보드 — ${SCENE_LABEL[store.state.scene]}`;
   // 다시 그릴 때 포커스 유지
   const active = document.activeElement as HTMLElement | null;
@@ -107,6 +139,13 @@ function renderScene() {
   const scroll = root.scrollTop;
   scene.render(root, ctx);
   root.scrollTop = scroll;
+  // 선택 직후 0.5초 동안은 '다음 장면' 버튼을 잠가, 더블클릭으로 결과 화면을 건너뛰지 않게 한다
+  const wait = 500 - (Date.now() - lastActAt);
+  if (wait > 0) {
+    const lock = () => root!.querySelectorAll<HTMLButtonElement>('[data-testid^="to-"]');
+    lock().forEach((b) => { b.disabled = true; });
+    window.setTimeout(() => lock().forEach((b) => { b.disabled = false; }), wait);
+  }
   if (key) {
     const el = root.querySelector<HTMLElement>(`[data-testid="${CSS.escape(key)}"], [data-assign="${CSS.escape(key)}"]`);
     if (el && !(el as HTMLButtonElement).disabled) el.focus();
@@ -116,6 +155,7 @@ function renderScene() {
 
 /** 장면 전환: 방 이름이 지나가는 전환 효과 → 탐색 화면(방향키 이동) → 자리에 도착하면 업무 화면 */
 function go(scene: SceneId) {
+  undoStack.length = 0;
   dlg.stopAll();
   closeModal();
   store.update((s) => setScene(s, scene));
@@ -263,6 +303,7 @@ document.addEventListener('keydown', (e) => {
   const tag = (e.target as HTMLElement).tagName;
   const interactive = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'A', 'SUMMARY', 'LABEL'].includes(tag);
   if ((e.key === 'Enter' || e.key === ' ') && !interactive) { e.preventDefault(); dlg.next(); }
+  else if (e.key === 'ArrowLeft' && !interactive) { e.preventDefault(); dlg.prev(); }
   else if (interactive && ['INPUT', 'SELECT', 'TEXTAREA'].includes(tag)) return;
   else if (e.key === 'r' || e.key === 'R') dlg.replay();
   else if (e.key === 's' || e.key === 'S') dlg.skip();

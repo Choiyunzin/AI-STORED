@@ -281,6 +281,38 @@ try {
   await ctx.close();
 } catch (e) { check('탐색 화면 진행', false, String(e).split('\n')[0]); }
 
+// 대사 다시 보기(◀ 이전) + 선택 다시 하기(↩)
+try {
+  const { page, ctx, errors } = await newPage();
+  await click(page, 'start-subtitle'); await skipCut(page);
+  await click(page, 'start-work');
+  await click(page, 'ev1-A-human');
+  await click(page, 'ev1-B-draft');
+  await click(page, 'ev1-confirm');
+  await page.waitForTimeout(300);
+  await page.locator('#dialogue [data-k=next]').click();
+  await page.locator('#dialogue [data-k=next]').click();
+  const before = await page.locator('.dlg-text').innerText();
+  await page.locator('[data-testid=dlg-prev]').click();
+  const after = await page.locator('.dlg-text').innerText();
+  check('대사 다시 보기: ◀ 이전으로 앞 대사가 다시 나옴', before !== after && await page.locator('#dialogue.reviewing').count() === 1, `${after.slice(0, 20)}…`);
+  await page.locator('#dialogue [data-k=next]').click();
+  check('대사 다시 보기: 다음 ▶으로 원래 위치로 복귀', (await page.locator('.dlg-text').innerText()) === before && await page.locator('#dialogue.reviewing').count() === 0);
+  const s1 = await page.evaluate(() => window.__axgame.state);
+  await page.locator('[data-testid=undo]').click();
+  await page.waitForTimeout(200);
+  const s2 = await page.evaluate(() => window.__axgame.state);
+  check('선택 다시 하기: 쓴 자원을 돌려받음', s1.slack === 15 && s2.slack === 18 && s2.ai === 100, `여유 ${s1.slack}→${s2.slack}, 이용권 ${s1.ai}→${s2.ai}`);
+  check('선택 다시 하기: 선택 화면으로 돌아옴', await page.locator('[data-testid=ev1-confirm]').count() === 1 && !s2.decisions.ev1_A);
+  await click(page, 'ev1-B-human');
+  await click(page, 'ev1-confirm');
+  const s3 = await page.evaluate(() => window.__axgame.state);
+  check('선택 다시 하기: 새 선택으로 다시 확정', s3.decisions.ev1_B === 'human' && s3.slack === 18 - 1 - 6 && s3.log.length === 2, `여유 ${s3.slack}, 기록 ${s3.log.length}건`);
+  await page.screenshot({ path: `${SHOTS}undo.png` });
+  check('다시 보기·다시 하기: 콘솔 오류 없음', errors.length === 0, errors.join(' | '));
+  await ctx.close();
+} catch (e) { check('다시 보기·다시 하기 진행', false, String(e).split('\n')[0]); }
+
 // 음성 동작: 입 모양·다시 듣기·음소거·설정의 실제 배정 표시
 {
   const { page, ctx, errors } = await newPage();

@@ -683,3 +683,11 @@ ul.compact li { margin: 2px 0; }
 .brief-item span { font-size: 24px; }
 .task-def { margin: 6px 0 2px; padding: 6px 10px; background: #fffaf0; border: 1px dashed #e9c98a; border-radius: 8px; font-size: 12px; line-height: 1.5; }
 .task-def b { color: #8a5a00; }
+
+.dlg-row { display: flex; gap: 4px; }
+.dlg-row .btn { flex: 1; justify-content: center; padding: 7px 8px; }
+#dialogue.reviewing { background: #fffaf0; box-shadow: inset 4px 0 0 #f0a020; }
+#dialogue.reviewing .dlg-count { color: #b06f00; font-weight: 700; }
+.pc-undo { background: #f0a020; color: #fff; border: 0; border-radius: 99px; padding: 3px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.pc-undo:hover { background: #d98a00; }
+.pc-undo[hidden] { display: none; }
