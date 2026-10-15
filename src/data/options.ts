@@ -26,7 +26,8 @@ export const EV1_MODES: { id: Ev1Mode; label: string; short: string }[] = [
 export const EV1_TASKS = {
   A: {
     title: '업무 A · 안내문 세 줄 수정',
-    desc: '이미 검토가 끝난 안내문에서 장소·시간 세 줄만 바꾼다. 바꿀 내용이 명확하다.',
+    desc: '이미 검토가 끝난 신입사원 안내문. 교육 장소·시작 시간·점심 장소, 이렇게 세 줄만 바뀌었다.',
+    goal: '신입사원이 바뀐 장소·시간을 정확히 알게 하기', done: '바뀐 세 줄만 고치고, 나머지 문장은 그대로',
     options: {
       human: { id: 'human', label: '사람이 직접', cost: { slack: 1, ai: 0 }, note: '세 줄만 고치고 바로 확인.' },
       draft: { id: 'draft', label: 'AI 초안 + 사람 확인', cost: { slack: 1, ai: 6 }, note: '요청·확인 시간이 직접 수정과 비슷하다.' },
@@ -34,8 +35,9 @@ export const EV1_TASKS = {
     } as Record<Ev1Mode, Option>,
   },
   B: {
-    title: '업무 B · 자유응답 300건 분석',
-    desc: '이전 차수의 가상 자유응답 300건에서 반복 불편을 묶고 대표 근거를 찾는다.',
+    title: '업무 B · 작년 만족도 조사 의견 300건 분석',
+    desc: '작년 신입사원 온보딩 교육 만족도 조사의 주관식 응답 300건. 신입사원이 반복해서 불편해한 점을 묶고, 대표 의견을 근거로 찾는다.',
+    goal: '올해 교육에서 고칠 불편 Top 3 찾기', done: '묶음마다 실제 응답 원문을 근거로 붙이기',
     options: {
       human: { id: 'human', label: '사람이 직접', cost: { slack: 6, ai: 0 }, note: '300건을 하나씩 읽고 분류. 정확하지만 오래 걸린다.' },
       draft: { id: 'draft', label: 'AI 초안 + 사람 확인', cost: { slack: 2, ai: 16 }, note: 'AI가 분류 초안을 만들고, 사람이 표본·원문으로 확인한다.' },
@@ -58,7 +60,7 @@ export const EV2_METHODS: Record<Ev2Method, Option & { pros: string; cons: strin
     note: '한 줄 요청으로 화면부터 띄운다.', pros: '빠르게 화면을 확인하고 의견을 받을 수 있다.', cons: '조건이 빠졌는지는 나중에 확인해야 한다.',
   },
   prd: {
-    id: 'prd', tag: 'B', label: '미니 PRD 4칸 정리 후 제작', cost: { slack: 2, ai: 14 },
+    id: 'prd', tag: 'B', label: '업무 정의서(4칸) 먼저 쓰고 만들기', cost: { slack: 2, ai: 14 },
     note: '대상·목적 / 필수 기능 / 사내 실행·저장 조건 / 완료 기준을 먼저 적는다.', pros: '복잡한 조건의 누락을 줄이고 완료 기준이 생긴다.', cons: '선행 정리 비용이 든다.',
   },
   reuse: {
@@ -81,8 +83,8 @@ export const EV2_TIMING: Record<Ev2Timing, Option> = {
 };
 export const EV2_VERIFY: Record<Ev2Verify, Option> = {
   none: { id: 'none', label: '검증 생략', cost: { slack: 0, ai: 0 }, note: '바로 승인 요청.' },
-  ai: { id: 'ai', label: '검증 AI', cost: { slack: 0, ai: 6 }, note: '입력된 자료·요구사항과 결과를 비교한다. 입력에 없는 기준은 모른다.' },
-  ai_heeyeon: { id: 'ai_heeyeon', label: '검증 AI + 희연 요구사항 확인', cost: { slack: 1, ai: 6 }, note: '사람이 요구사항 목록과 대조한다.' },
+  ai: { id: 'ai', label: 'AI 검토', cost: { slack: 0, ai: 6 }, note: '입력된 자료·요구사항과 결과를 비교한다. 입력에 없는 기준은 모른다.' },
+  ai_heeyeon: { id: 'ai_heeyeon', label: 'AI 검토 + 희연 요구사항 확인', cost: { slack: 1, ai: 6 }, note: '사람이 요구사항 목록과 대조한다.' },
 };
 export const EV2_REWORK: Cost = { slack: 1, ai: 8 };
 export const EV2_FIX: Cost = { slack: 1, ai: 4 };
@@ -95,8 +97,8 @@ export const EV2_COLLECT: Record<Ev2Collect, Option & { status: string }> = {
     note: 'HTML에는 설문 링크만 두고, 응답은 승인 설문 도구에 저장된다.', status: '승인 설문 도구에 저장 (연결 완료)',
   },
   request: {
-    id: 'request', label: '사내 API/DB 연계 지원 요청', cost: { slack: 2, ai: 0 },
-    note: '정보보호·IT 승인이 필요하다. 승인 전에는 저장되지 않는다.', status: '사내 API/DB 연계 요청 중 (현재 저장 안 됨)',
+    id: 'request', label: '사내 시스템(DB) 연결 요청', cost: { slack: 2, ai: 0 },
+    note: '정보보호·IT 승인이 필요하다. 승인 전에는 저장되지 않는다.', status: '사내 시스템 연결 요청 중 (승인 전이라 아직 저장 안 됨)',
   },
   exclude: {
     id: 'exclude', label: '이번 데모 버전에서 수집 기능 제외', cost: { slack: 0, ai: 0 },
@@ -139,7 +141,7 @@ export const EV3_KEY: Record<Ev3Key, Option> = {
 // ── 최종 보고 ───────────────────────────────────────────
 export type ReportChoice = 'honest' | 'over';
 export const REPORT: Record<ReportChoice, Option> = {
-  honest: { id: 'honest', label: '완료 / 데모 버전 / 연계 대기를 구분해 보고', cost: { slack: 0, ai: 0 }, note: '현재 상태 그대로.' },
+  honest: { id: 'honest', label: '완료 / 데모 버전 / 승인 대기를 구분해 보고', cost: { slack: 0, ai: 0 }, note: '현재 상태 그대로.' },
   over: { id: 'over', label: '“전부 완료했습니다”로 보고', cost: { slack: 0, ai: 0 }, note: '보고서가 짧아진다.' },
 };
 export const REPORT_CORRECTION: Cost = { slack: 1, ai: 0 };

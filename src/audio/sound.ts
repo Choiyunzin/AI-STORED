@@ -121,20 +121,27 @@ export class SoundManager {
     o.stop(t + 0.2);
   }
 
-  /** 타자기 '타닥' 소리: 짧은 잡음 + 낮은 '톡' */
+  /** 글자가 나올 때의 부드러운 '톡' 소리 (작은 사인파 방울음) */
   typeTick() {
     if (!this.ctx || !this.sfxOn || !this.sfxGain) return;
-    const t = this.ctx.currentTime + 0.005;
-    this.noise(t, 0.022 + Math.random() * 0.012, 0.55, 2200 + Math.random() * 2200, this.sfxGain);
+    const now = this.ctx.currentTime;
+    if (now - this.lastTick < 0.055) return; // 너무 촘촘하지 않게
+    this.lastTick = now;
+    const t = now + 0.005;
     const o = this.ctx.createOscillator();
     const g = this.ctx.createGain();
-    o.frequency.setValueAtTime(190 + Math.random() * 60, t);
-    g.gain.setValueAtTime(0.25, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+    o.type = 'sine';
+    const f = 620 + Math.random() * 160;
+    o.frequency.setValueAtTime(f, t);
+    o.frequency.exponentialRampToValueAtTime(f * 0.82, t + 0.07);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.11, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0008, t + 0.09);
     o.connect(g).connect(this.sfxGain);
     o.start(t);
-    o.stop(t + 0.04);
+    o.stop(t + 0.1);
   }
+  private lastTick = 0;
 
   private noiseBuf: AudioBuffer | null = null;
   private noise(t: number, dur: number, vol: number, hp: number, out?: AudioNode) {

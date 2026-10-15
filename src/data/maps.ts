@@ -15,6 +15,8 @@ export interface MapDef {
   afterAll?: string[];
   goal: { x: number; y: number; w: number; h: number; label: string };
   start: { x: number; y: number };
+  /** 장면에 처음 들어올 때 보여주는 사건 소개 카드 (상황 → 해야 할 일) */
+  brief?: { no: string; title: string; items: { icon: string; text: string }[]; lines: string[] };
 }
 
 export const WORLD = { w: 880, h: 520, top: 64 };
@@ -60,10 +62,26 @@ export const MAPS: Partial<Record<SceneId, MapDef>> = {
       amb('ev1', 'hong', officePos.hong), amb('ev1', 'sujin', officePos.sujin), amb('ev1', 'jongyun', officePos.jongyun), amb('ev1', 'heoin', officePos.heoin),
     ],
     afterAll: ['ev1_yunjin_01'],
+    brief: {
+      no: '사건 ① · 월요일 오전', title: 'AI를 어디에 쓸까?',
+      items: [
+        { icon: '📝', text: 'A. 이미 검토가 끝난 신입사원 안내문에서 장소·시간 세 줄만 고치기' },
+        { icon: '📊', text: 'B. 작년 신입사원 만족도 조사의 주관식 의견 300건을 읽고, 불편했던 점 찾기' },
+      ],
+      lines: ['일이 두 개 동시에 들어왔어요.', '하나는 아주 작고 분명한 일, 하나는 양이 많은 반복 일이에요.', '두 일을 같은 방법으로 해야 할까요? 먼저 동료들 이야기를 들어봐요.'],
+    },
   },
   ev2: {
     scene: 'ev2', room: '회의실', time: '화요일 14:00 · 안내 도구 회의', floor: 'meeting',
     hint: '허인·희연·종윤의 의견을 듣고, 회의 테이블의 노트북으로 가세요.',
+    brief: {
+      no: '사건 ② · 화요일 회의', title: '무엇을 위한 도구지?',
+      items: [
+        { icon: '🖥', text: '신입사원이 첫날 정보(어디로·몇 시에·뭘 들고)를 직접 찾아보는 안내 화면(HTML)' },
+        { icon: '📝', text: '만들기 전에 정할 것: 누구를 위해, 꼭 필요한 기능, 어디서 열리고 의견은 어디에 저장할지' },
+      ],
+      lines: ['작년 의견을 보니, 신입사원들이 첫날 안내를 제때 못 봐서 많이 헤맸어요.', '그래서 첫날 정보를 직접 찾아보고 의견도 남길 수 있는 안내 화면을 만들기로 했어요.', '화면부터 만들까요, 무엇을 만들지부터 정할까요? 회의실로 가 봐요.'],
+    },
     furniture: [
       { x: 270, y: 200, w: 340, h: 120, label: '회의 테이블', kind: 'table' },
       { x: 300, y: 50, w: 280, h: 26, label: '화이트보드: 첫날 안내 도구?', kind: 'board' },
@@ -81,6 +99,14 @@ export const MAPS: Partial<Record<SceneId, MapDef>> = {
   ev3: {
     scene: 'ev3', room: '자료실', time: '수요일 16:00 · 흩어진 파일들', floor: 'archive',
     hint: '수진·허인·치안의 이야기를 듣고, 공유 PC에서 파일을 정리하세요.',
+    brief: {
+      no: '사건 ③ · 수요일 오후', title: '파일은 많은데, 쓸 수가 없다',
+      items: [
+        { icon: '🗂', text: '‘최종’, ‘최종2’, ‘수정본’… 진짜 최신 파일 찾기' },
+        { icon: '📦', text: '다른 사람이 다시 쓸 수 있게 무엇을, 어디에, 누구까지 남길지 정하기' },
+      ],
+      lines: ['그동안 만든 자료가 각자의 PC에 흩어져 있어요.', '이름만 봐서는 어떤 게 최신인지, 어떻게 쓰는 건지 알 수가 없어요.', '자료실에서 팀원들과 함께 정리해 봐요.'],
+    },
     furniture: [
       { x: 60, y: 80, w: 220, h: 40, label: '📚 지난 차수 자료', kind: 'shelf' },
       { x: 60, y: 200, w: 220, h: 40, label: '📚 운영 서류', kind: 'shelf' },
@@ -98,12 +124,22 @@ export const MAPS: Partial<Record<SceneId, MapDef>> = {
   after: {
     scene: 'after', room: '교육팀 사무실', time: '한 달 뒤 · 다음 교육 차수', floor: 'office',
     hint: '다음 차수 담당자가 지난 자료를 찾고 있어요. 팀원들의 이야기를 들어보고 내 자리로 가세요.',
+    brief: {
+      no: '한 달 뒤 · 다음 교육 차수', title: '앞선 선택이 돌아온다',
+      items: [{ icon: '🔁', text: '지난번에 만든 자료와 방식을 다음 기수 교육에서 다시 쓰려고 해요' }],
+      lines: ['다음 기수 신입사원 교육 준비가 시작됐어요.', '지난주에 고른 방법들이 지금 어떤 결과로 돌아올까요?'],
+    },
     furniture: officeFurniture, goal: myPc, start: { x: 440, y: 480 },
     npcs: (['hong', 'sujin', 'jongyun', 'chian', 'heeyeon', 'heoin'] as SpeakerId[]).map((id) => amb('after', id, officePos[id])),
   },
   report: {
     scene: 'report', room: '팀장실', time: '금요일 17:00 · 최종 승인', floor: 'leader',
     hint: '홍팀장에게 다가가 최종 보고를 시작하세요.',
+    brief: {
+      no: '금요일 오후 · 최종 보고', title: '다 된 것과 아직인 것',
+      items: [{ icon: '✅', text: '다 끝난 것' }, { icon: '🧪', text: '데모 버전인 것' }, { icon: '⏳', text: '승인을 기다리는 것' }],
+      lines: ['이제 홍팀장에게 이번 주 결과를 보고할 시간이에요.', '다 끝난 것과 아직인 것을 정확히 나눠서 보고해야 해요.'],
+    },
     furniture: [
       { x: 360, y: 110, w: 160, h: 56, label: '팀장 책상', kind: 'desk' },
       { x: 60, y: 70, w: 160, h: 36, label: '📚', kind: 'shelf' },
@@ -116,6 +152,11 @@ export const MAPS: Partial<Record<SceneId, MapDef>> = {
   ending: {
     scene: 'ending', room: '라운지', time: '금요일 18:00 · 회고', floor: 'lounge',
     hint: '홍팀장에게 다가가 이야기를 나누고, 회고 보드로 가세요.',
+    brief: {
+      no: '금요일 저녁 · 회고', title: '한 주를 돌아보며',
+      items: [{ icon: '✅', text: '잘한 점' }, { icon: '🔁', text: '다음에 바꿔볼 점' }, { icon: '💬', text: '팀 토의 질문' }],
+      lines: ['한 주가 끝났어요. 팀이 라운지에 모였어요.', '무엇을 잘했고, 다음엔 무엇을 바꿔볼지 함께 이야기해 봐요.'],
+    },
     furniture: [
       { x: 100, y: 280, w: 180, h: 56, label: '🛋', kind: 'sofa' },
       { x: 600, y: 280, w: 180, h: 56, label: '🛋', kind: 'sofa' },

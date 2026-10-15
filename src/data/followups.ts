@@ -61,7 +61,7 @@ export const FOLLOWUPS: Followup[] = [
     intro: ['fu_stale', 'fu_stale_2'],
     options: [
       { id: 'fix', label: '올해 공지 기준으로 수정 후 재배포', cost: { slack: 2, ai: 4 }, note: '원본을 바로잡는다.', lines: ['fu_stale_fix'] },
-      { id: 'errata', label: '정오표 공지로 우선 대응', cost: { slack: 1, ai: 0 }, note: '원본 교체는 나중으로 미룬다.', lines: ['fu_stale_errata'], flag: 'errata' },
+      { id: 'errata', label: '바뀐 내용 안내부터 먼저 보내기', cost: { slack: 1, ai: 0 }, note: '원본 교체는 나중으로 미룬다.', lines: ['fu_stale_errata'], flag: 'errata' },
     ],
   },
   {
@@ -148,8 +148,8 @@ export const FOLLOWUPS: Followup[] = [
   {
     id: 'fu_review', title: '검토 흐름이 다시 잡아낸 오류', positive: true, priority: 21, kind: 'choice',
     cause: (s) => d(s, 'ev2_verify') === 'ai_heeyeon'
-      ? '사건 ②에서 검증 AI 뒤에 희연의 요구사항 확인을 붙였습니다.'
-      : '사건 ②에서 최신 공지를 입력하고 검증 AI를 거쳤습니다.',
+      ? '사건 ②에서 AI 검토 뒤에 희연의 요구사항 확인을 붙였습니다.'
+      : '사건 ②에서 최신 공지를 입력하고 AI 검토를 거쳤습니다.',
     when: (s) => !!s.flags.review_flow,
     intro: ['fu_review'],
     options: [

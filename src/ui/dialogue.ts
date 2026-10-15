@@ -70,7 +70,7 @@ export class DialogueController {
     const c = CHARACTERS[l.speakerId];
     this.els.portrait.innerHTML = `<span class="avatar big" style="--s:96px">${avatarSvg(l.speakerId, l.expression)}</span>`;
     this.els.name.textContent = c.name;
-    this.els.rank.textContent = `${c.gender === 'female' ? '여' : '남'} · ${c.dialect}`;
+    this.els.rank.textContent = `${c.rank} · ${c.strengths[0]}`;
     this.els.count.textContent = `${i + 1} / ${this.queue.length}`;
     this.els.text.textContent = l.text;
     this.els.next.textContent = i === this.queue.length - 1 ? '대화 마치기 ✓' : '다음 ▶';

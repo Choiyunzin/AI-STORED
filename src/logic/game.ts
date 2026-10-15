@@ -117,7 +117,7 @@ export function commitEv1(s: GameState, a: Ev1Mode, b: Ev1Mode, scope: Ev1Scope)
     reusable: false, reuseNote: '아직 공유 정리 전',
   });
   upsertFile(s, {
-    id: 'f_analysis', name: '자유응답_분석표.xlsx', kind: 'sheet', owner: 'yunjin', location: 'mine',
+    id: 'f_analysis', name: '만족도조사_의견분석표.xlsx', kind: 'sheet', owner: 'yunjin', location: 'mine',
     review: b === 'human' ? '수작업 분류 (사람 확인)' : b === 'draft' ? 'AI 분류 초안 + 원문 표본 확인' : 'AI 분류 (원문 미확인)',
     reusable: false, reuseNote: '아직 공유 정리 전',
   });
@@ -129,7 +129,7 @@ export function commitEv1(s: GameState, a: Ev1Mode, b: Ev1Mode, scope: Ev1Scope)
   if (b === 'draft') lines.push('ev1_res_b_draft_2');
   if (b === 'full') lines.push('ev1_res_b_full_2');
   if (aiTasks > 0) lines.push(scope === 'all' ? 'ev1_res_scope_all' : 'ev1_res_scope_rel');
-  lines.push('ev1_res_heoin');
+  if (b !== 'full') lines.push('ev1_res_heoin');
   s.lastLines.ev1 = lines;
   return lines;
 }
@@ -140,7 +140,7 @@ export function commitEv2Method(s: GameState, m: Ev2Method): string[] {
   const opt = EV2_METHODS[m];
   decide(s, 'ev2_method', m, `일하는 방식: ${opt.tag}. ${opt.label}`, opt.cost);
   if (m === 'prd') {
-    upsertFile(s, { id: 'f_prd', name: '안내도구_미니PRD.md', kind: 'record', owner: 'yunjin', location: 'mine', review: '희연 요구사항 검토', reusable: false, reuseNote: '아직 공유 정리 전' });
+    upsertFile(s, { id: 'f_prd', name: '안내도구_업무정의서.md', kind: 'record', owner: 'yunjin', location: 'mine', review: '희연 요구사항 검토', reusable: false, reuseNote: '아직 공유 정리 전' });
   } else if (m === 'quick') {
     upsertFile(s, { id: 'f_req', name: '안내도구_요청기록.txt', kind: 'record', owner: 'yunjin', location: 'mine', review: '요청 1줄 (요구사항 없음)', reusable: false, reuseNote: '아직 공유 정리 전' });
   } else {
@@ -210,15 +210,15 @@ export function commitEv2Flow(s: GameState, input: Ev2Input, timing: Ev2Timing, 
     vtexts.push('희연: 작년 출입 절차 → 올해 기준으로 수정');
   }
   if (verifyAi) {
-    charge(s, 'ev2_linkfix', '수정: 깨진 링크', EV2_LINKFIX);
+    charge(s, 'ev2_linkfix', '수정: 열리지 않는 링크', EV2_LINKFIX);
     res.lines.push('ev2_f_verify_ai');
-    vtexts.unshift('검증 AI: 깨진 링크 1건 수정');
-    if (stale) vtexts.push('검증 AI: 입력 자료끼리는 일치 → 통과 (작년 절차인지 모름)');
+    vtexts.unshift('AI 검토: 열리지 않는 링크 1건 수정');
+    if (stale) vtexts.push('AI 검토: 입력 자료끼리는 일치 → 통과 (작년 절차인지 모름)');
   } else {
     res.lines.push('ev2_f_no_verify');
   }
   res.nodes.push({
-    id: 'verify', label: heeyeon ? '검증 AI + 희연 확인' : verifyAi ? '검증 AI' : '검증 (생략)',
+    id: 'verify', label: heeyeon ? 'AI 검토 + 희연 확인' : verifyAi ? 'AI 검토' : '검증 (생략)',
     state: verify === 'none' ? 'skip' : stale ? 'warn' : vtexts.length ? 'fix' : 'ok',
     text: verify === 'none' ? '검증 없이 통과' : vtexts.join(' / '),
   });
@@ -229,7 +229,7 @@ export function commitEv2Flow(s: GameState, input: Ev2Input, timing: Ev2Timing, 
   s.flags.link_bug = !verifyAi;
   s.flags.review_flow = heeyeon || (hasNotice && verifyAi);
 
-  const review = verify === 'none' ? '검증 없음 · 승인 대기' : heeyeon ? '검증 AI + 요구사항 확인 · 승인 대기' : '검증 AI 통과 · 승인 대기';
+  const review = verify === 'none' ? '검증 없음 · 승인 대기' : heeyeon ? 'AI 검토 + 요구사항 확인 · 승인 대기' : 'AI 검토 통과 · 승인 대기';
   upsertFile(s, { id: 'f_tool', name: '첫날_안내도구.html', kind: 'html', owner: 'yunjin', location: 'mine', review, reusable: false, reuseNote: '아직 공유 정리 전', status: s.files.find((f) => f.id === 'f_tool')?.status });
   upsertFile(s, { id: 'f_review', name: '안내도구_검토기록.txt', kind: 'record', owner: 'yunjin', location: 'mine', review: '기록', reusable: false, reuseNote: '아직 공유 정리 전' });
   s.lastLines.ev2f = res.lines;
@@ -243,7 +243,7 @@ export function commitEv2Collect(s: GameState, c: Ev2Collect): string[] {
   const tool = s.files.find((f) => f.id === 'f_tool');
   if (tool) tool.status = opt.status;
   if (c === 'request') {
-    upsertFile(s, { id: 'f_api', name: '사내API_DB_연계_지원요청.txt', kind: 'record', owner: 'yunjin', location: 'mine', review: '요청 중 (승인·연결 전)', reusable: false, reuseNote: '아직 공유 정리 전', status: '요청 중' });
+    upsertFile(s, { id: 'f_api', name: '사내시스템_연결요청.txt', kind: 'record', owner: 'yunjin', location: 'mine', review: '요청 중 (승인·연결 전)', reusable: false, reuseNote: '아직 공유 정리 전', status: '요청 중' });
   }
   const lines = [c === 'survey' ? 'ev2_c_survey' : c === 'request' ? 'ev2_c_request' : 'ev2_c_exclude'];
   s.lastLines.ev2c = lines;
@@ -396,7 +396,7 @@ function applyFollowupToFiles(s: GameState, id: string, opt: string) {
   if (id === 'fu_key') { const p = file('f_promptpack'); if (p) p.review = '키 문자열 제거 · 폐기 요청 완료'; }
   if (id === 'fu_stale') {
     const g = file('f_guide_base');
-    if (g) { g.review = opt === 'fix' ? '올해 공지 기준 수정 완료' : '정오표 공지 (원본 교체 예정)'; g.reuseNote = opt === 'fix' ? '올해 기준 반영' : '원본에 작년 절차 남아 있음'; }
+    if (g) { g.review = opt === 'fix' ? '올해 공지 기준 수정 완료' : '바뀐 내용 안내만 보냄 (원본은 아직 수정 전)'; g.reuseNote = opt === 'fix' ? '올해 기준 반영' : '원본에 작년 절차 남아 있음'; }
     if (opt === 'fix') s.flags.stale_html = false;
   }
   if (id === 'fu_unverified' && opt === 'check') { const a = file('f_analysis'); if (a) a.review = 'AI 분류 + 사후 표본 확인'; }
@@ -420,11 +420,11 @@ export function deliverables(s: GameState): Deliverable[] {
   const out: Deliverable[] = [];
   out.push({ name: '수정 안내문', status: d.ev1_A === 'full' ? '완료 (전체 재검토 후)' : '완료', kind: 'done' });
   const unverified = d.ev1_B === 'full' && d.fu_unverified !== 'check';
-  out.push({ name: '자유응답 분석표', status: unverified ? '완료했으나 원문 미확인' : '완료 (원문 확인)', kind: unverified ? 'issue' : 'done' });
+  out.push({ name: '만족도 조사 의견 분석표', status: unverified ? '완료했으나 원문 미확인' : '완료 (원문 확인)', kind: unverified ? 'issue' : 'done' });
   const toolIssues: string[] = [];
   if (s.flags.stale_html) toolIssues.push('작년 출입 절차');
   if (s.flags.missing_req) toolIssues.push('담당자 수정 불가');
-  if (s.flags.link_bug) toolIssues.push('깨진 링크');
+  if (s.flags.link_bug) toolIssues.push('열리지 않는 링크');
   out.push({ name: 'HTML 첫날 안내 도구', status: `데모 버전${toolIssues.length ? ` · 남은 문제: ${toolIssues.join(', ')}` : ' · 확인된 문제 없음'}`, kind: toolIssues.length ? 'issue' : 'proto' });
   const c = d.ev2_collect as Ev2Collect | undefined;
   if (c) out.push({ name: '의견 수집', status: EV2_COLLECT[c].status, kind: c === 'survey' ? 'done' : c === 'request' ? 'pending' : 'excluded' });

@@ -32,7 +32,7 @@ const SAMPLES = [
 ];
 
 export function previewTaskB(): string {
-  return `<p class="muted">이전 차수 자유응답 300건 중 일부 (가상 데이터)</p>
+  return `<p class="muted">작년 신입사원 온보딩 교육 만족도 조사 · 주관식 응답 300건 중 일부 (가상 데이터)</p>
   <ul class="samples">${SAMPLES.map(([n, t]) => `<li><b>${n}</b> ${esc(t)}</li>`).join('')}<li class="muted">… 외 294건</li></ul>`;
 }
 
@@ -73,7 +73,7 @@ export function toolSrcdoc(s: GameState): string {
       ? '<button class="fake">의견 제출 → 자동 취합 완료</button><p class="note">⚠ AI가 데모 버전에 넣은 버튼입니다. 실제 저장 경로는 없습니다.</p>'
       : '<p class="note">응답 저장 방식 미정</p>')
     : c === 'survey' ? '<a href="#" onclick="return false">의견 남기기 (승인 설문 도구로 이동)</a><p class="note">응답은 승인된 설문 도구에 저장됩니다.</p>'
-    : c === 'request' ? '<p class="note">의견 수집: 사내 API/DB 연계 요청 중 — 현재 이 화면에서는 저장되지 않습니다.</p>'
+    : c === 'request' ? '<p class="note">의견 수집: 사내 시스템 연결 요청 중 — 현재 이 화면에서는 저장되지 않습니다.</p>'
     : '<p class="note">이 안내 도구는 의견을 수집하지 않습니다. 의견은 교육 종료 후 설문으로 받습니다.</p>';
   const link = s.flags.link_bug ? '<a href="#" onclick="return false" class="broken">교육 일정표 (링크 오류)</a>' : '<a href="#" onclick="return false">교육 일정표</a>';
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>
@@ -103,7 +103,7 @@ function prd(s: GameState): string {
 function reviewRecord(s: GameState): string {
   const rows = s.log.filter((l) => l.decision.startsWith('ev2_') || l.decision.startsWith('cost:ev2'));
   return `<ul class="rec">${rows.map((l) => `<li>${esc(l.label)} <span class="muted">(${costText(l)})</span></li>`).join('')}</ul>
-  <p class="muted">검증 AI는 입력된 자료 안에서만 비교합니다. 최종 확인 책임은 사람에게 있습니다.</p>`;
+  <p class="muted">AI 검토는 입력된 자료 안에서만 비교합니다. 최종 확인 책임은 사람에게 있습니다.</p>`;
 }
 
 export const costText = (c: { slack: number; ai: number }) => {
@@ -154,10 +154,10 @@ export function fileContent(f: FileItem, s: GameState): string {
     case 'f_reuse': return `<p>작년 승인된 "첫날 안내" 도구를 복사해 수정.</p><ul><li>재사용: 화면 구조, 질문 목록</li><li>한계: 의견 남기기 기능 없음 → 추가 필요</li><li>최신성: 출입 절차가 작년 기준 → 확인 필요</li></ul>`;
     case 'f_tool': return `<p class="muted">데모 버전 미리보기 · 응답 저장 상태: <b>${esc(f.status || '미정')}</b></p><iframe class="proto" sandbox="" title="HTML 데모 버전 미리보기" srcdoc="${esc(toolSrcdoc(s))}"></iframe>`;
     case 'f_review': return reviewRecord(s);
-    case 'f_api': return `<dl class="meta"><dt>요청</dt><dd>신입사원 의견 응답을 사내 DB에 저장하는 API 연계</dd><dt>상태</dt><dd><span class="tag warn">요청 중 · 승인/연결 전</span></dd><dt>예상</dt><dd>정보보호·IT 검토 후 2주 (가상 일정)</dd></dl><p class="muted">승인 전까지 HTML은 응답을 저장하지 않습니다.</p>`;
+    case 'f_api': return `<dl class="meta"><dt>요청</dt><dd>신입사원 의견 응답을 사내 DB에 저장하는 시스템 연결</dd><dt>상태</dt><dd><span class="tag warn">요청 중 · 승인/연결 전</span></dd><dt>예상</dt><dd>정보보호·IT 검토 후 2주 (가상 일정)</dd></dl><p class="muted">승인 전까지 HTML은 응답을 저장하지 않습니다.</p>`;
     case 'f_guide_base': return versionPreview(s.decisions.ev3_version || 'v3') + (s.decisions.fu_stale === 'fix' ? '<p class="ok-box">사후 수정: 올해 출입 절차로 교체됨</p>' : '');
     case 'f_readme': return `<h4>첫날 안내 도구 · 사용법</h4><ul><li>목적: 신입사원 첫날 정보 안내${s.decisions.ev2_collect ? ` / 수집: ${esc(s.files.find((x) => x.id === 'f_tool')?.status || '')}` : ''}</li><li>여는 법: 사내 접속 → 사내 승인 공유함 › 교육팀 › 첫날_안내도구.html</li><li>수정: ${s.flags.missing_req ? '현재 코드 직접 수정 필요 (윤진 문의)' : '안내문구.csv 수정'}</li><li>담당자: 윤진 매니저 / 검토: ${esc(s.files.find((x) => x.id === 'f_tool')?.review || '')}</li><li>버전: v1.0 (${s.decisions.ev3_level === '3' ? '변경 이유는 재사용 문서 참고' : '변경 이유 미기록'})</li></ul>`;
-    case 'f_promptpack': return promptMemoPreview(s.decisions.ev3_key !== 'keep' || s.decisions.fu_key !== undefined) + `<p>${s.decisions.ev2_method === 'quick' && s.decisions.fu_prompt !== 'fix' ? '<span class="tag warn">근거 자료(요구사항) 없음</span>' : '요구사항: 미니 PRD / 검토 기록 첨부 · 변경 이유: 올해 출입 절차 변경'}</p>`;
+    case 'f_promptpack': return promptMemoPreview(s.decisions.ev3_key !== 'keep' || s.decisions.fu_key !== undefined) + `<p>${s.decisions.ev2_method === 'quick' && s.decisions.fu_prompt !== 'fix' ? '<span class="tag warn">근거 자료(요구사항) 없음</span>' : '요구사항: 업무 정의서 / 검토 기록 첨부 · 변경 이유: 올해 출입 절차 변경'}</p>`;
     case 'f_roster': return rosterPreview(s.decisions.ev3_pii === 'clean' || s.decisions['fu_pii:replace'] !== undefined) + `<p class="muted">열람 범위: ${f.scope ? EV3_SCOPE[f.scope].label : '-'}${f.status ? ` · ${esc(f.status)}` : ''}</p>`;
     default: return '<p class="muted">미리보기 없음</p>';
   }

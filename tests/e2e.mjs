@@ -67,6 +67,8 @@ const click = async (page, testid) => {
   // 탐색 화면(방향키 이동)이 떠 있으면 '바로 가기'로 업무 화면까지 진행
   const loc = page.locator(`[data-testid="${testid}"]`).first();
   for (let i = 0; i < 40 && !(await loc.count()); i++) {
+    const cut = page.locator('[data-testid=cut-skip]');
+    if (await cut.count()) { await cut.click().catch(() => {}); await page.waitForTimeout(450); continue; }
     const skip = page.locator('[data-testid=map-skip]');
     if (await skip.count()) { await skip.click(); await page.waitForTimeout(650); } else await page.waitForTimeout(100);
   }
@@ -78,6 +80,7 @@ const skipCut = async (pg) => {
   await pg.waitForTimeout(450);
 };
 const passMap = async (page) => {
+  await skipCut(page);
   await page.waitForSelector('[data-testid=map-skip]', { timeout: 5000 });
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForSelector('.scene-title', { timeout: 5000 });
@@ -211,6 +214,10 @@ try {
   check('컷신: TTS로 읽지 않음', (await page.evaluate(() => window.__ttsLog.texts.length)) === 0);
   await page.screenshot({ path: `${SHOTS}cut-1.png` });
   await page.locator('[data-testid=cut-next]').click();
+  await page.locator('[data-testid=cut-next]').click();
+  await page.waitForTimeout(150);
+  await page.locator('[data-testid=cut-prev]').click();
+  check('컷신: ◀ 이전으로 앞 장으로 돌아감', /이 게임은/.test(await page.locator('.cut-kicker').innerText()));
   check('컷신: 클릭하면 문장 즉시 완성', (await page.locator('.cut-text').innerText()).includes('잘한 점과 아쉬운 점을 돌아봐요'));
   check('컷신: 첫 장은 게임 소개 4컷 애니메이션', await page.locator('.cv-about .ab').count() === 4);
   for (let i = 0; i < 7; i++) { await page.locator('[data-testid=cut-next]').click(); await page.waitForTimeout(80); }
@@ -263,6 +270,10 @@ try {
   // 사건 ①로 이동하면 다시 탐색 화면 + 장소 전환
   await finishDialogue(page);
   await page.locator('[data-testid=start-work]').click();
+  await page.waitForSelector('#cutscene', { timeout: 5000 });
+  check('사건 소개: 지도에 들어가기 전에 사건 소개 카드', /사건 ①/.test(await page.locator('.cut-card').innerText()));
+  await page.screenshot({ path: `${SHOTS}brief-ev1.png` });
+  await skipCut(page);
   await page.waitForSelector('.map-world', { timeout: 5000 });
   await page.waitForTimeout(800);
   check('장면 전환: 다음 사건에서 다시 탐색 화면', await page.locator('.hud-time').innerText().then((t) => /10:30/.test(t)));

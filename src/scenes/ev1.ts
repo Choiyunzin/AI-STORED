@@ -47,6 +47,7 @@ export const ev1Scene: Scene = {
       return `<article class="task-card ${cur ? 'placed' : ''}" draggable="true" data-task="${t}" aria-label="${task.title}">
         <header><span class="task-ic" aria-hidden="true">${t === 'A' ? '📝' : '📊'}</span><b>${task.title}</b><button type="button" class="btn tiny ghost" data-preview="${t}">자료 보기</button></header>
         <p>${task.desc}</p>
+        <p class="task-def"><b>🎯 목적</b> ${task.goal}<br/><b>✅ 끝난 기준</b> ${task.done}</p>
         <div class="seg" role="group" aria-label="${task.title} 처리 방식">
           ${EV1_MODES.map((m) => `<button type="button" class="seg-b" data-assign="${t}:${m.id}" aria-pressed="${cur === m.id}" data-testid="ev1-${t}-${m.id}">
             <span class="seg-ic" aria-hidden="true">${{ human: '🧑‍💼', draft: '🤖+🧑', full: '🤖' }[m.id]}</span><span>${task.options[m.id].label}</span>${costChip(task.options[m.id].cost)}<small>${task.options[m.id].note}</small></button>`).join('')}

@@ -19,6 +19,7 @@ import { SPEAKER_ORDER } from './data/characters';
 import { MAPS } from './data/maps';
 import { OfficeMap } from './ui/map';
 import { playCutscene } from './ui/cutscene';
+import type { CutSlide } from './data/cutscene';
 
 const SCENES: Partial<Record<SceneId, Scene>> = {
   intro: introScene, ev1: ev1Scene, ev2: ev2Scene, ev3: ev3Scene, after: afterScene, report: reportScene, ending: endingScene,
@@ -122,8 +123,22 @@ function go(scene: SceneId) {
   const seq = ++goSeq;
   transition(def ? `📍 ${def.room}` : '', def?.time || '', () => {
     if (seq !== goSeq) return;
-    if (def && !store.state.flags[`map_${scene}`]) openMap(scene);
-    else openDesk(scene);
+    if (def && !store.state.flags[`map_${scene}`]) {
+      // 사건을 먼저 소개하고(상황 → 해야 할 일), 그다음 걸어 다니며 대화
+      if (def.brief && !store.state.flags[`brief_${scene}`]) {
+        const b = def.brief;
+        const slide: CutSlide = {
+          visual: 'html', kicker: '무슨 일이냐면…', lines: b.lines,
+          html: `<div class="brief-head"><span class="brief-no">${b.no}</span><span class="brief-title">${b.title}</span>
+            <div class="brief-items">${b.items.map((it, i) => `<div class="brief-item" style="--d:${i}"><span>${it.icon}</span>${it.text}</div>`).join('')}</div></div>`,
+        };
+        // 장소 전환 효과가 끝난 뒤에 사건 소개 카드를 띄운다
+        window.setTimeout(() => {
+          if (seq !== goSeq) return;
+          playCutscene(sound, () => { store.update((s) => { s.flags[`brief_${scene}`] = true; }); if (seq === goSeq) openMap(scene); }, 0, [slide], '알겠어요, 가 볼게요 ▶');
+        }, 850);
+      } else openMap(scene);
+    } else openDesk(scene);
   });
 }
 

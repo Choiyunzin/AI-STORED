@@ -30,7 +30,7 @@
   "id": "ev1_chian_01",
   "sceneId": "ev1",
   "speakerId": "chian",
-  "text": "안내문 세 줄 고치려다가 AI랑 대화만 길어졌네요. 이거 제가 치는 게 빠르겠는디요?",
+  "text": "장소랑 시간 세 줄만 바꾸면 되는디, AI한테 시키면 설명하다 시간 다 가겄어요. 이건 제가 직접 치는 게 빠르겠는디요?",
   "expression": "smirk",
   "condition": "always",
   "nextId": "ev1_heeyeon_01"
@@ -39,7 +39,7 @@
   "id": "ev1_heeyeon_01",
   "sceneId": "ev1",
   "speakerId": "heeyeon",
-  "text": "반면에 자유응답 300건은 아직 수작업이네요. 둘을 같은 방식으로 처리할 필요는 없어요.",
+  "text": "반면에 작년 만족도 조사 주관식 의견 300건은 아직 아무도 못 읽었어요. 두 일은 성격이 달라요. 같은 방법으로 할 필요 없어요.",
   "expression": "focused",
   "condition": "always",
   "nextId": "ev1_yunjin_01"
@@ -48,7 +48,7 @@
   "id": "ev1_yunjin_01",
   "sceneId": "ev1",
   "speakerId": "yunjin",
-  "text": "업무마다 방식을 따로 정해볼게요. AI한테 넘길 자료도 같이 골라야겠네예.",
+  "text": "그럼 일마다 목적이랑 끝났다고 볼 기준부터 정하고, 사람이 할지 AI한테 맡길지 나눠볼게요.",
   "expression": "thinking",
   "condition": "always",
   "nextId": ""
@@ -156,16 +156,16 @@
   "id": "ev1_res_heoin",
   "sceneId": "ev1",
   "speakerId": "heoin",
-  "text": "근데 안내문을 안 읽는 게 문제면, 안내문 말고 다른 걸 만들어야 하는 거 아닌가요?",
+  "text": "작년 의견 보니까 ‘첫날 안내를 제때 못 봤다’는 얘기가 제일 많네요. 그럼 안내문을 더 길게 쓰기보다, 신입사원이 직접 눌러서 찾아보는 안내 화면을 만들면 어때요?",
   "expression": "excited",
-  "condition": "always",
+  "condition": "ev1_B!=full",
   "nextId": ""
  },
  {
   "id": "ev2_heoin_01",
   "sceneId": "ev2",
   "speakerId": "heoin",
-  "text": "정보를 누르면 답이 나오는 안내 도구는 어때요? 신입사원이 직접 골라보게요.",
+  "text": "어제 말한 거요! 신입사원이 ‘어디로, 몇 시에, 뭘 들고’ 가는지 직접 눌러서 찾아보는 안내 화면, 만들어 봐요.",
   "expression": "excited",
   "condition": "always",
   "nextId": "ev2_yunjin_01"
@@ -174,7 +174,7 @@
   "id": "ev2_yunjin_01",
   "sceneId": "ev2",
   "speakerId": "yunjin",
-  "text": "화면 데모 버전은 AI로 만들어볼 수 있어요.",
+  "text": "화면은 AI로 금방 만들 수 있어요. 다만 뭘 만들지부터 같이 정해야 할 것 같아요.",
   "expression": "bright",
   "condition": "always",
   "nextId": "ev2_heeyeon_01"
@@ -183,7 +183,7 @@
   "id": "ev2_heeyeon_01",
   "sceneId": "ev2",
   "speakerId": "heeyeon",
-  "text": "목표, 필수 기능, 저장 방식부터 정하죠. 예쁘게 뜨는 것과 운영되는 건 달라요.",
+  "text": "맞아요. 누구를 위한 건지, 꼭 필요한 기능이 뭔지, 의견은 어디에 저장할지부터 정하죠. 화면이 예쁘게 뜨는 거랑 실제로 쓰이는 건 달라요.",
   "expression": "focused",
   "condition": "always",
   "nextId": "ev2_jongyun_01"
@@ -192,7 +192,7 @@
   "id": "ev2_jongyun_01",
   "sceneId": "ev2",
   "speakerId": "jongyun",
-  "text": "지난 자료 드릴게요. 출입 절차는 올해 기준으로 다시 확인해야 해요.",
+  "text": "작년에 쓴 안내 자료 드릴게요. 다만 출입 절차가 올해 바뀌어서, 꼭 최신 공지로 다시 확인해야 해요.",
   "expression": "calm",
   "condition": "always",
   "nextId": ""
@@ -201,7 +201,7 @@
   "id": "ev2_m_quick",
   "sceneId": "ev2",
   "speakerId": "heoin",
-  "text": "벌써 화면이 떴네요! 근데 여기 '자동 취합 완료' 버튼은 진짜 되는 거예요?",
+  "text": "벌써 화면이 떴네요! 근데 여기 ‘의견 제출 → 자동 취합 완료’ 버튼은 진짜로 의견이 모이는 거예요?",
   "expression": "excited",
   "condition": "ev2_method=quick",
   "nextId": "ev2_m_quick_2"
@@ -210,7 +210,7 @@
   "id": "ev2_m_quick_2",
   "sceneId": "ev2",
   "speakerId": "heeyeon",
-  "text": "화면에 써 있다고 되는 건 아니에요. 저장 경로는 아직 정한 적 없어요.",
+  "text": "화면에 그렇게 써 있다고 되는 건 아니에요. 의견을 어디에 저장할지는 아직 정한 적이 없어요.",
   "expression": "sharp",
   "condition": "ev2_method=quick",
   "nextId": ""
@@ -219,7 +219,7 @@
   "id": "ev2_m_prd",
   "sceneId": "ev2",
   "speakerId": "heeyeon",
-  "text": "대상, 필수 기능, 실행 조건, 완료 기준. 이 네 칸이면 빠진 게 바로 보여요.",
+  "text": "누구를 위해, 꼭 필요한 기능, 어디서 열리고 어디에 저장할지, 언제 끝난 걸로 볼지. 이 네 칸을 채우니 빠진 게 바로 보여요.",
   "expression": "smile",
   "condition": "ev2_method=prd",
   "nextId": "ev2_m_prd_2"
@@ -228,7 +228,7 @@
   "id": "ev2_m_prd_2",
   "sceneId": "ev2",
   "speakerId": "hong",
-  "text": "좋아요. 완료 기준이 있으니 승인할 때 판단하기도 쉽겠네요.",
+  "text": "좋아요. 끝났다고 볼 기준이 있으니, 나중에 승인할 때 판단하기도 쉽겠네요.",
   "expression": "focused",
   "condition": "ev2_method=prd",
   "nextId": ""
@@ -291,7 +291,7 @@
   "id": "ev2_f_stale_caught",
   "sceneId": "ev2",
   "speakerId": "heeyeon",
-  "text": "요구사항에 '변경된 출입 절차 반영'이 있었죠. 이건 작년 절차예요.",
+  "text": "잠깐만요, 요구사항에 ‘올해 바뀐 출입 절차 반영’이 있었죠. 여기 적힌 건 작년 절차예요.",
   "expression": "sharp",
   "condition": "ev2_input=old & ev2_verify=ai_heeyeon",
   "nextId": ""
@@ -300,7 +300,7 @@
   "id": "ev2_f_verify_ai",
   "sceneId": "ev2",
   "speakerId": "yunjin",
-  "text": "검증 AI가 깨진 링크 하나를 찾았어요. 그래도 내용 판단은 사람이 봐야 해요.",
+  "text": "AI로 한 번 검토했더니, 열리지 않는 링크 하나를 찾아서 고쳤어요. 그래도 안내 내용이 맞는지는 사람이 한 번 더 봐야 해요.",
   "expression": "focused",
   "condition": "ev2_verify!=none",
   "nextId": ""
@@ -309,7 +309,7 @@
   "id": "ev2_f_no_verify",
   "sceneId": "ev2",
   "speakerId": "hong",
-  "text": "검증 단계 없이 바로 승인 요청이 왔네요. 제가 볼 수 있는 범위만 확인할게요.",
+  "text": "검토 없이 바로 승인 요청이 왔네요. 일단 제가 볼 수 있는 데까지만 확인할게요.",
   "expression": "worried",
   "condition": "ev2_verify=none",
   "nextId": ""
@@ -327,7 +327,7 @@
   "id": "ev2_c_request",
   "sceneId": "ev2",
   "speakerId": "hong",
-  "text": "지원 요청은 넣어두고, 승인 전까지는 '요청 중'으로 표시합시다.",
+  "text": "사내 시스템 연결은 요청해 두고, 승인 나기 전까지는 ‘요청 중’이라고 표시합시다.",
   "expression": "focused",
   "condition": "ev2_collect=request",
   "nextId": ""
@@ -372,7 +372,7 @@
   "id": "ev3_v_right",
   "sceneId": "ev3",
   "speakerId": "heeyeon",
-  "text": "작성 시각이랑 검토 기록으로 고르셨네요. 이름에 '최종'이 붙었다고 최신은 아니죠.",
+  "text": "작성 시각이랑 검토 기록을 보고 고르셨네요. 파일 이름에 ‘최종’이 붙었다고 최신은 아니죠.",
   "expression": "smile",
   "condition": "ev3_version=v3 & opened",
   "nextId": ""
@@ -579,7 +579,7 @@
   "id": "fu_stale_errata",
   "sceneId": "after",
   "speakerId": "hong",
-  "text": "정오표로 우선 알리고, 원본은 이번 주 안에 교체합시다.",
+  "text": "우선 ‘출입 절차가 바뀌었다’는 안내부터 신입사원들에게 보내고, 자료 원본은 이번 주 안에 고칩시다.",
   "expression": "focused",
   "condition": "fu_stale=errata",
   "nextId": ""
@@ -840,7 +840,7 @@
   "id": "rp_hong_01",
   "sceneId": "report",
   "speakerId": "hong",
-  "text": "보고 전에 확인할게요. 무엇을 완료했고, 무엇이 데모 버전이나 연계 대기인가요?",
+  "text": "보고 전에 확인할게요. 다 끝난 건 뭐고, 데모 버전이거나 승인을 기다리는 건 뭔가요?",
   "expression": "focused",
   "condition": "always",
   "nextId": ""
@@ -876,7 +876,7 @@
   "id": "end_hong_01",
   "sceneId": "ending",
   "speakerId": "hong",
-  "text": "AI를 쓴 횟수보다, 우리 팀의 일을 어떻게 연결했는지가 중요했네요.",
+  "text": "AI를 몇 번 썼는지보다, 처음에 일을 어떻게 정하고 팀이 어떻게 이어서 했는지가 중요했네요.",
   "expression": "smile",
   "condition": "always",
   "nextId": "end_yunjin_01"
@@ -885,7 +885,7 @@
   "id": "end_yunjin_01",
   "sceneId": "ending",
   "speakerId": "yunjin",
-  "text": "AI만 잘 써서는 안 되네요. 팀에서 아는 거랑 같이 연결해야 일이 되겠어요.",
+  "text": "AI를 잘 쓰는 것만으론 부족하네요. 일을 먼저 제대로 정하고, 팀이 아는 걸 함께 모아야 일이 되네요.",
   "expression": "bright",
   "condition": "always",
   "nextId": ""

@@ -1,10 +1,12 @@
 /** 도입 컷신: 이 게임이 무엇인지 + 상황 + 규칙. 음성(TTS) 대신 타자기 효과로 표시한다. 쉬운 말로 쓴다. */
-export type CutVisual = 'about' | 'calendar' | 'yunjin' | 'team' | 'slack' | 'ai' | 'how' | 'goal';
+export type CutVisual = 'html' | 'about' | 'calendar' | 'yunjin' | 'team' | 'slack' | 'ai' | 'how' | 'goal';
 
 export interface CutSlide {
   visual: CutVisual;
   kicker: string;
   lines: string[];
+  /** visual 이 'html' 일 때 그릴 내용 */
+  html?: string;
 }
 
 export const CUTSCENE: CutSlide[] = [
@@ -26,7 +28,7 @@ export const CUTSCENE: CutSlide[] = [
   },
   {
     visual: 'team', kicker: '같이 일할 사람들',
-    lines: ['팀원 일곱 명은 잘하는 게 다 달라요.', '옛날 일을 잘 아는 사람, 현장을 잘 아는 사람, 아이디어가 많은 사람… 이야기를 잘 들어 두세요.'],
+    lines: ['팀원 일곱 명은 잘하는 게 다 달라요.', '팀 히스토리를 잘 아는 사람, 현장을 잘 아는 사람, 아이디어가 많은 사람… 이야기를 잘 들어 두세요.'],
   },
   {
     visual: 'slack', kicker: '규칙 ① 작업 여유 = 이번 주에 쓸 수 있는 시간',
@@ -34,7 +36,7 @@ export const CUTSCENE: CutSlide[] = [
   },
   {
     visual: 'ai', kicker: '규칙 ② AI 이용권 = AI에게 일을 시키는 비용',
-    lines: ['AI한테 일을 맡기면 보라색 이용권이 줄어요. 자료를 많이 넘기거나 다시 시키면 더 줄어요.', '그렇다고 AI를 많이 쓸수록 이기는 게임은 아니에요.', '세 줄 고치기는 손으로 하는 게 빠르고, 300건 정리는 AI가 빨라요.'],
+    lines: ['AI한테 일을 맡기면 보라색 이용권이 줄어요. 자료를 많이 넘기거나 다시 시키면 더 줄어요.', 'AI를 많이 쓸수록 이기는 게임은 아니에요.', '세 줄 고치기는 손으로 하는 게 빠르고, 300건 정리는 AI가 빨라요.'],
   },
   {
     visual: 'how', kicker: '하는 방법',
@@ -42,6 +44,6 @@ export const CUTSCENE: CutSlide[] = [
   },
   {
     visual: 'goal', kicker: '목표',
-    lines: ['정답을 맞히는 게임이 아니에요.', 'AI랑 사람이 일을 잘 나누고, 결과를 확인하고, 다음 사람이 쓸 수 있게 남기는 게 목표예요.', '자, 시작해 볼까요?'],
+    lines: ['정답을 맞히는 게임이 아니에요.', '먼저 일을 ‘정의’하고(누구를 위해, 무엇을, 어디까지), AI와 사람이 나눠 하고, 결과를 확인하고, 다음 사람이 쓸 수 있게 남기는 게 목표예요.', '자, 시작해 볼까요?'],
   },
 ];

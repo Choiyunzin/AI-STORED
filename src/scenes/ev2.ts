@@ -35,7 +35,7 @@ export const ev2Scene: Scene = {
           <p class="pro">＋ ${m.pros}</p><p class="con">－ ${m.cons}</p>${costChip(m.cost, s)}
           <button type="button" class="btn primary" data-m="${k}" data-testid="ev2-method-${k}">이 방식으로</button></article>`;
       }).join('')}</div>
-      <p class="hint">어느 방식이든 뒤 단계에서 보완하면 성공할 수 있어요. PRD가 유일한 정답은 아닙니다.</p>`;
+      <p class="hint">어느 방식이든 뒤 단계에서 보완하면 성공할 수 있어요. 업무 정의서가 유일한 정답은 아닙니다.</p>`;
       root.querySelectorAll<HTMLButtonElement>('[data-m]').forEach((b) => b.addEventListener('click', () => {
         const lines = ctx.act((st) => commitEv2Method(st, b.dataset.m as Ev2Method));
         ctx.sound.sfx('file');
@@ -51,7 +51,7 @@ export const ev2Scene: Scene = {
       : m === 'quick'
         ? `<div class="warn-box">데모 버전이 바로 떴습니다. 화면에 <b>“의견 제출 → 자동 취합 완료”</b> 버튼이 있지만, 실제 저장 경로는 정한 적이 없습니다.</div>`
         : `<div class="info-box">작년 승인 도구를 복사했습니다. 화면 구조는 재사용, <b>의견 남기기 기능 없음</b>·<b>출입 절차는 작년 기준</b>이라 확인이 필요합니다.</div>`;
-    const methodBar = `<div class="method-bar"><span>선택한 방식: <b>${EV2_METHODS[m].tag}. ${EV2_METHODS[m].label}</b></span><button type="button" class="btn small" data-open="f_tool">🌐 데모 버전 보기</button>${m === 'prd' ? '<button type="button" class="btn small" data-open="f_prd">미니 PRD</button>' : m === 'quick' ? '<button type="button" class="btn small" data-open="f_req">요청 기록</button>' : '<button type="button" class="btn small" data-open="f_reuse">재사용 기록</button>'}</div>${methodOut}`;
+    const methodBar = `<div class="method-bar"><span>선택한 방식: <b>${EV2_METHODS[m].tag}. ${EV2_METHODS[m].label}</b></span><button type="button" class="btn small" data-open="f_tool">🌐 데모 버전 보기</button>${m === 'prd' ? '<button type="button" class="btn small" data-open="f_prd">업무 정의서</button>' : m === 'quick' ? '<button type="button" class="btn small" data-open="f_req">요청 기록</button>' : '<button type="button" class="btn small" data-open="f_reuse">재사용 기록</button>'}</div>${methodOut}`;
 
     // 2단계: 오케스트레이션
     if (!d.ev2_input) {
@@ -70,7 +70,7 @@ export const ev2Scene: Scene = {
         <div class="conn" aria-hidden="true">↓</div>
         <div class="stage"><div class="st-h"><b>④ 검증</b><small>누가 무엇과 대조할까</small></div><div class="st-c">${radio('verify', EV2_VERIFY, ui.verify)}</div></div>
         <div class="conn" aria-hidden="true">↓</div>
-        <div class="stage human"><div class="st-h"><b>⑤ 사람의 최종 승인 🔒</b><small>윤진 → 홍팀장</small></div><div class="st-c"><p>검증 AI도 틀릴 수 있어 <b>최종 확인 책임은 사람</b>에게 있습니다. 이 단계는 뺄 수 없습니다.</p></div></div>
+        <div class="stage human"><div class="st-h"><b>⑤ 사람의 최종 승인 🔒</b><small>윤진 → 홍팀장</small></div><div class="st-c"><p>AI 검토도 틀릴 수 있어 <b>최종 확인 책임은 사람</b>에게 있습니다. 이 단계는 뺄 수 없습니다.</p></div></div>
       </div>
       <div class="confirm-bar"><span>흐름 비용 ${costChip(preview, s)} <small class="muted">+ 실행 중 발견되는 수정 비용</small></span>
         <button type="button" class="btn primary" data-testid="ev2-run">▶ 흐름 실행</button></div>`;
@@ -112,7 +112,7 @@ export const ev2Scene: Scene = {
       root.querySelectorAll<HTMLButtonElement>('[data-c]').forEach((b) => b.addEventListener('click', () => {
         const lines = ctx.act((st) => commitEv2Collect(st, b.dataset.c as Ev2Collect));
         ctx.sound.sfx('file');
-        if (b.dataset.c === 'request') ctx.dlg.systemMessage('사내API_DB_연계_지원요청.txt 생성 · 상태: 요청 중', 'file');
+        if (b.dataset.c === 'request') ctx.dlg.systemMessage('사내시스템_연결요청.txt 생성 · 상태: 요청 중', 'file');
         ctx.dlg.play(lines);
       }));
       bindOpen(root, ctx);

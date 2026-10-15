@@ -150,7 +150,7 @@ export function openProfile(id: SpeakerId, s: GameState) {
   const c = CHARACTERS[id];
   const op = c.opinions[s.scene] || c.opinions.intro || '';
   openModal(`${c.name}`, `<div class="profile">${avatarEl(id, 'smile', 96)}<div>
-    <p><b>${c.rank}</b> · ${c.gender === 'female' ? '여성' : '남성'} · ${c.dialect}</p>
+    <p><b>${c.rank}</b></p>
     <p>${esc(c.personality)}</p>
     <p><b>업무 강점</b> ${c.strengths.map((x) => `<span class="tag">${x}</span>`).join(' ')}</p>
     <p class="opinion">💬 지금 의견: “${esc(op)}”</p></div></div>`);

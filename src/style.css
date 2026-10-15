@@ -433,7 +433,7 @@ ul.compact li { margin: 2px 0; }
 /* ── 탐색 화면 (방향키 이동) ── */
 #workspace.map-mode { padding: 0; overflow: hidden; position: relative; display: flex; flex-direction: column; background: #2b3045; }
 #workspace.desk-in { animation: deskIn .4s ease-out; }
-@keyframes deskIn { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+@keyframes deskIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .map-wrap { position: relative; outline: none; flex: 0 0 auto; }
 .map-wrap:focus-visible { outline: 3px solid #f0a020; }
 .map-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; overflow: hidden; border-radius: 6px; user-select: none; touch-action: none; cursor: pointer; transition: transform .5s ease-in, opacity .5s; }
@@ -582,7 +582,7 @@ ul.compact li { margin: 2px 0; }
 #cutscene { position: fixed; inset: 0; z-index: 65; display: grid; place-items: center; padding: 16px; background: radial-gradient(circle at 30% 20%, #4a5aa8, transparent 55%), radial-gradient(circle at 80% 90%, #6a3fb8, transparent 50%), #1c2140; animation: fadeIn .4s; cursor: pointer; }
 #cutscene.out { animation: fadeOut .35s forwards; }
 @keyframes fadeIn { from { opacity: 0; } } @keyframes fadeOut { to { opacity: 0; } }
-.cut-card { width: min(760px, 100%); background: rgba(255,255,255,.97); border-radius: 22px; padding: 22px 28px 18px; box-shadow: 0 30px 80px rgba(0,0,0,.4); cursor: default; }
+.cut-card { width: min(760px, 100%); background: #fff; border-radius: 22px; padding: 22px 28px 18px; box-shadow: 0 30px 80px rgba(0,0,0,.4); cursor: default; }
 .cut-progress { display: flex; gap: 6px; margin-bottom: 14px; }
 .cut-progress i { flex: 1; height: 5px; border-radius: 99px; background: #e3e6ef; }
 .cut-progress i.done { background: var(--brand-2); } .cut-progress i.cur { background: #f0a020; }
@@ -672,3 +672,14 @@ ul.compact li { margin: 2px 0; }
 .ab-stage.res .r2 { animation-delay: .3s; } .ab-stage.res .r3 { animation-delay: .6s; color: var(--warn); }
 @keyframes resIn { 0%, 10% { opacity: 0; transform: translateX(-8px); } 25%, 90% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 @media (max-width: 560px) { .cv-about { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ab-stage { height: 64px; } .ab b { font-size: 11px; } }
+
+.cut-ctrl .btn[data-k=prev]:disabled { visibility: hidden; }
+.cut-visual.brief { height: auto; min-height: 150px; padding: 14px; }
+.brief-head { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.brief-no { font-weight: 900; color: #fff; background: var(--brand); border-radius: 99px; padding: 3px 14px; font-size: 13px; animation: popIn .4s; }
+.brief-title { font-size: 24px; font-weight: 800; animation: popIn .4s .1s backwards; }
+.brief-items { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.brief-item { display: flex; gap: 8px; align-items: center; background: #fff; border-radius: 12px; padding: 8px 12px; box-shadow: var(--shadow); font-size: 13px; text-align: left; max-width: 300px; animation: popIn .4s backwards; animation-delay: calc(.3s + var(--d) * .25s); }
+.brief-item span { font-size: 24px; }
+.task-def { margin: 6px 0 2px; padding: 6px 10px; background: #fffaf0; border: 1px dashed #e9c98a; border-radius: 8px; font-size: 12px; line-height: 1.5; }
+.task-def b { color: #8a5a00; }
