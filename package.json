@@ -1,0 +1,22 @@
+{
+  "name": "onboarding-ax-game",
+  "private": true,
+  "version": "1.0.0",
+  "description": "입사 D-7, 우리 팀의 AX 작전 — 교육팀 AI 협업 시뮬레이션",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run audio:manifest && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "dialogue:csv": "node scripts/build-dialogue-csv.mjs && node scripts/build-voice-mapping.mjs",
+    "audio:manifest": "node scripts/build-audio-manifest.mjs",
+    "e2e": "node tests/e2e.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
+}

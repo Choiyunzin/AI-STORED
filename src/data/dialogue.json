@@ -1,0 +1,1100 @@
+[
+ {
+  "id": "intro_hong_01",
+  "sceneId": "intro",
+  "speakerId": "hong",
+  "text": "다음 주에 신입사원 30명이 들어옵니다. 안내자료와 설문, 운영 준비까지 마무리해봅시다.",
+  "expression": "focused",
+  "condition": "always",
+  "nextId": "intro_sujin_01"
+ },
+ {
+  "id": "intro_sujin_01",
+  "sceneId": "intro",
+  "speakerId": "sujin",
+  "text": "승인된 사내 AI와 도구를 쓰고, 서로 만든 자료를 확인하면서 진행해요.",
+  "expression": "calm",
+  "condition": "always",
+  "nextId": "intro_yunjin_01"
+ },
+ {
+  "id": "intro_yunjin_01",
+  "sceneId": "intro",
+  "speakerId": "yunjin",
+  "text": "네, AI로 줄일 수 있는 일부터 나눠볼게요. 내부 기준은 같이 봐주시면 좋겠어요.",
+  "expression": "bright",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_chian_01",
+  "sceneId": "ev1",
+  "speakerId": "chian",
+  "text": "안내문 세 줄 고치려다가 AI랑 대화만 길어졌네요. 이거 제가 치는 게 빠르겠는디요?",
+  "expression": "smirk",
+  "condition": "always",
+  "nextId": "ev1_heeyeon_01"
+ },
+ {
+  "id": "ev1_heeyeon_01",
+  "sceneId": "ev1",
+  "speakerId": "heeyeon",
+  "text": "반면에 자유응답 300건은 아직 수작업이네요. 둘을 같은 방식으로 처리할 필요는 없어요.",
+  "expression": "focused",
+  "condition": "always",
+  "nextId": "ev1_yunjin_01"
+ },
+ {
+  "id": "ev1_yunjin_01",
+  "sceneId": "ev1",
+  "speakerId": "yunjin",
+  "text": "업무마다 방식을 따로 정해볼게요. AI한테 넘길 자료도 같이 골라야겠네예.",
+  "expression": "thinking",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_a_human",
+  "sceneId": "ev1",
+  "speakerId": "chian",
+  "text": "세 줄은 손으로 금방이제. 바뀐 데만 딱 바뀌었어요.",
+  "expression": "happy",
+  "condition": "ev1_A=human",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_a_draft",
+  "sceneId": "ev1",
+  "speakerId": "heeyeon",
+  "text": "초안은 금방 왔는데, 확인까지 하니 손으로 고친 거랑 비슷하네요. 다음엔 직접 해도 되겠어요.",
+  "expression": "neutral",
+  "condition": "ev1_A=draft",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_a_full",
+  "sceneId": "ev1",
+  "speakerId": "chian",
+  "text": "바꿀 건 세 줄이었는디, 멀쩡한 문장까지 다 바뀌었네요.",
+  "expression": "worried",
+  "condition": "ev1_A=full",
+  "nextId": "ev1_res_a_full_2"
+ },
+ {
+  "id": "ev1_res_a_full_2",
+  "sceneId": "ev1",
+  "speakerId": "hong",
+  "text": "이미 검토 끝난 문장이 바뀌었으니, 전체를 다시 확인해야겠어요.",
+  "expression": "serious",
+  "condition": "ev1_A=full",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_b_human",
+  "sceneId": "ev1",
+  "speakerId": "sujin",
+  "text": "꼼꼼하게 보고 있네요. 다만 뒤에 남은 업무 시간도 같이 봐야겠어요.",
+  "expression": "calm",
+  "condition": "ev1_B=human",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_b_draft",
+  "sceneId": "ev1",
+  "speakerId": "jongyun",
+  "text": "분류는 빨라졌네요. 이 의견이 그때 어떤 상황에서 나왔는지는 제가 설명할게요.",
+  "expression": "smile",
+  "condition": "ev1_B=draft",
+  "nextId": "ev1_res_b_draft_2"
+ },
+ {
+  "id": "ev1_res_b_draft_2",
+  "sceneId": "ev1",
+  "speakerId": "yunjin",
+  "text": "원문 표본도 같이 봤어요. 묶음마다 대표 문장 붙여 둘게요.",
+  "expression": "bright",
+  "condition": "ev1_B=draft",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_b_full",
+  "sceneId": "ev1",
+  "speakerId": "heeyeon",
+  "text": "분류표가 깔끔하긴 한데요. 주차 불편이 식사 불만에 묶였어요. 원문은 누가 봤죠?",
+  "expression": "sharp",
+  "condition": "ev1_B=full",
+  "nextId": "ev1_res_b_full_2"
+ },
+ {
+  "id": "ev1_res_b_full_2",
+  "sceneId": "ev1",
+  "speakerId": "yunjin",
+  "text": "아, 확정 전에 표본을 안 봤네요. 분석표에 '원문 미확인'으로 표시해 둘게요.",
+  "expression": "sheepish",
+  "condition": "ev1_B=full",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_scope_all",
+  "sceneId": "ev1",
+  "speakerId": "hong",
+  "text": "전체 묶음을 넘기니 이용권도 더 들고, 관계없는 내용을 걸러내는 데 시간이 더 갔네요.",
+  "expression": "neutral",
+  "condition": "ev1_scope=all",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_scope_rel",
+  "sceneId": "ev1",
+  "speakerId": "sujin",
+  "text": "필요한 자료만 넘기니 결과도 빨리 나오고 확인하기도 쉽네요.",
+  "expression": "smile",
+  "condition": "ev1_scope=related",
+  "nextId": ""
+ },
+ {
+  "id": "ev1_res_heoin",
+  "sceneId": "ev1",
+  "speakerId": "heoin",
+  "text": "근데 안내문을 안 읽는 게 문제면, 안내문 말고 다른 걸 만들어야 하는 거 아닌가요?",
+  "expression": "excited",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_heoin_01",
+  "sceneId": "ev2",
+  "speakerId": "heoin",
+  "text": "정보를 누르면 답이 나오는 안내 도구는 어때요? 신입사원이 직접 골라보게요.",
+  "expression": "excited",
+  "condition": "always",
+  "nextId": "ev2_yunjin_01"
+ },
+ {
+  "id": "ev2_yunjin_01",
+  "sceneId": "ev2",
+  "speakerId": "yunjin",
+  "text": "화면 시제품은 AI로 만들어볼 수 있어요.",
+  "expression": "bright",
+  "condition": "always",
+  "nextId": "ev2_heeyeon_01"
+ },
+ {
+  "id": "ev2_heeyeon_01",
+  "sceneId": "ev2",
+  "speakerId": "heeyeon",
+  "text": "목표, 필수 기능, 저장 방식부터 정하죠. 예쁘게 뜨는 것과 운영되는 건 달라요.",
+  "expression": "focused",
+  "condition": "always",
+  "nextId": "ev2_jongyun_01"
+ },
+ {
+  "id": "ev2_jongyun_01",
+  "sceneId": "ev2",
+  "speakerId": "jongyun",
+  "text": "지난 자료 드릴게요. 출입 절차는 올해 기준으로 다시 확인해야 해요.",
+  "expression": "calm",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_m_quick",
+  "sceneId": "ev2",
+  "speakerId": "heoin",
+  "text": "벌써 화면이 떴네요! 근데 여기 '자동 취합 완료' 버튼은 진짜 되는 거예요?",
+  "expression": "excited",
+  "condition": "ev2_method=quick",
+  "nextId": "ev2_m_quick_2"
+ },
+ {
+  "id": "ev2_m_quick_2",
+  "sceneId": "ev2",
+  "speakerId": "heeyeon",
+  "text": "화면에 써 있다고 되는 건 아니에요. 저장 경로는 아직 정한 적 없어요.",
+  "expression": "sharp",
+  "condition": "ev2_method=quick",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_m_prd",
+  "sceneId": "ev2",
+  "speakerId": "heeyeon",
+  "text": "대상, 필수 기능, 실행 조건, 완료 기준. 이 네 칸이면 빠진 게 바로 보여요.",
+  "expression": "smile",
+  "condition": "ev2_method=prd",
+  "nextId": "ev2_m_prd_2"
+ },
+ {
+  "id": "ev2_m_prd_2",
+  "sceneId": "ev2",
+  "speakerId": "hong",
+  "text": "좋아요. 완료 기준이 있으니 승인할 때 판단하기도 쉽겠네요.",
+  "expression": "focused",
+  "condition": "ev2_method=prd",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_m_reuse",
+  "sceneId": "ev2",
+  "speakerId": "jongyun",
+  "text": "작년에 쓰던 안내 도구가 있어요. 당시엔 같은 질문이 너무 많이 와서 이걸로 바꿨죠.",
+  "expression": "smile",
+  "condition": "ev2_method=reuse",
+  "nextId": "ev2_m_reuse_2"
+ },
+ {
+  "id": "ev2_m_reuse_2",
+  "sceneId": "ev2",
+  "speakerId": "chian",
+  "text": "근디 그거 의견 남기는 칸은 없었을 거요. 출입 안내도 작년 거고.",
+  "expression": "smirk",
+  "condition": "ev2_method=reuse",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_flow_hint",
+  "sceneId": "ev2",
+  "speakerId": "sujin",
+  "text": "기본 흐름은 짜 뒀어요. 연결 두세 개만 바꿔보면 돼요.",
+  "expression": "calm",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_notice",
+  "sceneId": "ev2",
+  "speakerId": "jongyun",
+  "text": "올해 공지를 같이 넣었으니, 바뀐 출입 절차가 분석에 잡혔네요.",
+  "expression": "smile",
+  "condition": "ev2_input=notice",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_rework",
+  "sceneId": "ev2",
+  "speakerId": "yunjin",
+  "text": "작성 AI가 변경 분석보다 먼저 끝나버렸어요. 출입 절차 부분은 다시 만들어야겠네.",
+  "expression": "sheepish",
+  "condition": "ev2_timing=parallel & ev2_input=notice",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_req_caught",
+  "sceneId": "ev2",
+  "speakerId": "heeyeon",
+  "text": "담당자가 직접 고칠 수 있어야 한다는 조건이 빠졌어요. 지금 바로 넣죠.",
+  "expression": "sharp",
+  "condition": "ev2_method=quick & ev2_verify=ai_heeyeon",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_stale_caught",
+  "sceneId": "ev2",
+  "speakerId": "heeyeon",
+  "text": "요구사항에 '변경된 출입 절차 반영'이 있었죠. 이건 작년 절차예요.",
+  "expression": "sharp",
+  "condition": "ev2_input=old & ev2_verify=ai_heeyeon",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_verify_ai",
+  "sceneId": "ev2",
+  "speakerId": "yunjin",
+  "text": "검증 AI가 깨진 링크 하나를 찾았어요. 그래도 내용 판단은 사람이 봐야 해요.",
+  "expression": "focused",
+  "condition": "ev2_verify!=none",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_f_no_verify",
+  "sceneId": "ev2",
+  "speakerId": "hong",
+  "text": "검증 단계 없이 바로 승인 요청이 왔네요. 제가 볼 수 있는 범위만 확인할게요.",
+  "expression": "worried",
+  "condition": "ev2_verify=none",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_c_survey",
+  "sceneId": "ev2",
+  "speakerId": "sujin",
+  "text": "응답은 승인된 설문 도구에 모이고, HTML은 안내만 맡는 거죠. 역할이 깔끔하네요.",
+  "expression": "smile",
+  "condition": "ev2_collect=survey",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_c_request",
+  "sceneId": "ev2",
+  "speakerId": "hong",
+  "text": "지원 요청은 넣어두고, 승인 전까지는 '요청 중'으로 표시합시다.",
+  "expression": "focused",
+  "condition": "ev2_collect=request",
+  "nextId": ""
+ },
+ {
+  "id": "ev2_c_exclude",
+  "sceneId": "ev2",
+  "speakerId": "heoin",
+  "text": "수집은 이번엔 빼고, 화면에 '의견은 설문으로'라고 써둘게요. 되는 척하는 버튼보단 훨씬 낫제요.",
+  "expression": "sheepish",
+  "condition": "ev2_collect=exclude",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_sujin_01",
+  "sceneId": "ev3",
+  "speakerId": "sujin",
+  "text": "같은 자료를 두 사람이 만들고 있었네요. 지금 있는 것부터 같이 볼까요?",
+  "expression": "worried",
+  "condition": "always",
+  "nextId": "ev3_heoin_01"
+ },
+ {
+  "id": "ev3_heoin_01",
+  "sceneId": "ev3",
+  "speakerId": "heoin",
+  "text": "어, 제가 수정 전 파일을 올렸네요. 새 파일이 어디 갔더라…",
+  "expression": "sheepish",
+  "condition": "always",
+  "nextId": "ev3_chian_01"
+ },
+ {
+  "id": "ev3_chian_01",
+  "sceneId": "ev3",
+  "speakerId": "chian",
+  "text": "파일은 있는디, 누르면 제 컴퓨터에서는 안 되네요?",
+  "expression": "smirk",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_v_right",
+  "sceneId": "ev3",
+  "speakerId": "heeyeon",
+  "text": "작성 시각이랑 검토 기록으로 고르셨네요. 이름에 '최종'이 붙었다고 최신은 아니죠.",
+  "expression": "smile",
+  "condition": "ev3_version=v3 & opened",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_v_right_lucky",
+  "sceneId": "ev3",
+  "speakerId": "heeyeon",
+  "text": "맞는 파일이긴 한데, 열어보지 않고 고르셨죠? 다음엔 검토 기록부터 봐요.",
+  "expression": "neutral",
+  "condition": "ev3_version=v3 & !opened",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_v_other",
+  "sceneId": "ev3",
+  "speakerId": "sujin",
+  "text": "그럼 이 파일을 기준으로 정리할게요.",
+  "expression": "neutral",
+  "condition": "ev3_version!=v3",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_l_1",
+  "sceneId": "ev3",
+  "speakerId": "chian",
+  "text": "파일만 딱 올리면 끝이요? 다음 사람은 이거 어떻게 여는지 모를 건디.",
+  "expression": "smirk",
+  "condition": "ev3_level=1",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_l_2",
+  "sceneId": "ev3",
+  "speakerId": "sujin",
+  "text": "결과만 올리지 말고, 어떻게 쓰는지도 같이 남겨요. 다음 사람이 바로 이어받을 수 있게요.",
+  "expression": "smile",
+  "condition": "ev3_level=2",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_l_3",
+  "sceneId": "ev3",
+  "speakerId": "jongyun",
+  "text": "변경 이유까지 남기면, 다음 차수엔 왜 이렇게 했는지 다시 묻지 않아도 돼요.",
+  "expression": "smile",
+  "condition": "ev3_level=3",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_s_mine",
+  "sceneId": "ev3",
+  "speakerId": "yunjin",
+  "text": "일단 제 작업함에 정리해 둘게요. 필요하면 그때 보내드리면 되니까예.",
+  "expression": "thinking",
+  "condition": "ev3_storage=mine",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_s_shared",
+  "sceneId": "ev3",
+  "speakerId": "sujin",
+  "text": "공유함에 올리면 찾을 수 있죠. 열람 범위도 같이 봐요.",
+  "expression": "calm",
+  "condition": "ev3_storage=shared",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_pii_found",
+  "sceneId": "ev3",
+  "speakerId": "yunjin",
+  "text": "잠깐만예, 운영 명단 파일에 개인 연락처랑 교육과 상관없는 메모가 들어 있어요.",
+  "expression": "worried",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_p_clean",
+  "sceneId": "ev3",
+  "speakerId": "sujin",
+  "text": "함께 쓰려면 찾을 수 있어야 하고, 어디까지 공유해도 되는지도 알아야 해요.",
+  "expression": "smile",
+  "condition": "ev3_pii=clean",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_p_team",
+  "sceneId": "ev3",
+  "speakerId": "heeyeon",
+  "text": "팀 안이라도 연락처가 꼭 필요한 사람은 운영 담당 둘뿐이에요. 다음엔 걸러서 올리죠.",
+  "expression": "neutral",
+  "condition": "ev3_pii=team",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_p_company",
+  "sceneId": "ev3",
+  "speakerId": "hong",
+  "text": "공유 범위부터 바로잡고, 필요한 정보만 남깁시다.",
+  "expression": "serious",
+  "condition": "ev3_pii=company",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_key_found",
+  "sceneId": "ev3",
+  "speakerId": "chian",
+  "text": "어라, 이 프롬프트 메모에 키 같은 게 써 있는디요? 'DEMO-KEY'로 시작하네요.",
+  "expression": "surprised",
+  "condition": "ev3_level=3",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_k_remove",
+  "sceneId": "ev3",
+  "speakerId": "yunjin",
+  "text": "제가 메모에 붙여 넣었었네요. 그 줄은 지우고 바로 폐기 요청할게요.",
+  "expression": "sheepish",
+  "condition": "ev3_key=remove",
+  "nextId": ""
+ },
+ {
+  "id": "ev3_k_keep",
+  "sceneId": "ev3",
+  "speakerId": "heoin",
+  "text": "일단 공유함 안에서만 보는 거니까 괜찮지 않을까요…?",
+  "expression": "neutral",
+  "condition": "ev3_key=keep",
+  "nextId": ""
+ },
+ {
+  "id": "fu_pii",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "전사 공개함에 연락처가 그대로 올라갔어요. 접근 제한부터 하고, 교체하고, 보고까지 오늘 끝냅시다.",
+  "expression": "serious",
+  "condition": "ev3_pii=company",
+  "nextId": "fu_pii_2"
+ },
+ {
+  "id": "fu_pii_2",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "제가 공유 기록을 뽑을게요. 누가 열었는지부터 확인해요.",
+  "expression": "calm",
+  "condition": "ev3_pii=company",
+  "nextId": ""
+ },
+ {
+  "id": "fu_pii_done",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "세 단계 다 처리했어요. 다음부터는 올리기 전에 정보 등급부터 확인해요.",
+  "expression": "calm",
+  "condition": "fu_pii=done",
+  "nextId": ""
+ },
+ {
+  "id": "fu_key",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "공유된 메모에 키 문자열이 남아 있어요. 보안 담당에게 알리고 폐기 요청해야 해요.",
+  "expression": "sharp",
+  "condition": "ev3_key=keep",
+  "nextId": ""
+ },
+ {
+  "id": "fu_key_done",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "폐기 요청 넣었어요. 메모도 키 없는 버전으로 바꿨습니다.",
+  "expression": "sheepish",
+  "condition": "fu_key=done",
+  "nextId": ""
+ },
+ {
+  "id": "fu_stale",
+  "sceneId": "after",
+  "speakerId": "chian",
+  "text": "배포 직전인디, 출입 절차가 작년 거네요? 신입들 정문에서 다 막히겄어요.",
+  "expression": "worried",
+  "condition": "stale",
+  "nextId": "fu_stale_2"
+ },
+ {
+  "id": "fu_stale_2",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "작년엔 사원증 발급 전에 임시 출입증을 줬어요. 올해는 그 절차가 없어졌죠.",
+  "expression": "calm",
+  "condition": "stale",
+  "nextId": ""
+ },
+ {
+  "id": "fu_stale_fix",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "올해 공지 기준으로 고쳤어요. 바뀐 이유도 한 줄 남겨 둘게요.",
+  "expression": "calm",
+  "condition": "fu_stale=fix",
+  "nextId": ""
+ },
+ {
+  "id": "fu_stale_errata",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "정오표로 우선 알리고, 원본은 이번 주 안에 교체합시다.",
+  "expression": "focused",
+  "condition": "fu_stale=errata",
+  "nextId": ""
+ },
+ {
+  "id": "fu_dup",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "어? 이 안내 자료, 제가 어제 처음부터 다시 만들었어요. 공유함에 없길래요.",
+  "expression": "worried",
+  "condition": "ev3_storage=mine",
+  "nextId": ""
+ },
+ {
+  "id": "fu_dup_merge",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "둘을 합치고, 앞으로는 공유함에서 먼저 찾아볼게요.",
+  "expression": "smile",
+  "condition": "fu_dup=merge",
+  "nextId": ""
+ },
+ {
+  "id": "fu_dup_keep",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "두 버전이 따로 돌면 다음엔 어느 게 맞는지 또 물어보게 될 거예요.",
+  "expression": "neutral",
+  "condition": "fu_dup=keep",
+  "nextId": ""
+ },
+ {
+  "id": "fu_usage",
+  "sceneId": "after",
+  "speakerId": "chian",
+  "text": "윤진 매니저, 이거 어떻게 여는지 벌써 네 사람째 물어봤당께요.",
+  "expression": "smirk",
+  "condition": "ev3_level=1",
+  "nextId": ""
+ },
+ {
+  "id": "fu_usage_write",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "지금 사용법 한 장 써서 같이 올릴게요. 실행 조건도 적어 둘게예.",
+  "expression": "bright",
+  "condition": "fu_usage=write",
+  "nextId": ""
+ },
+ {
+  "id": "fu_usage_answer",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "일단 한 분씩 설명드릴게요… 오늘은 이걸로 시간 다 가겠네.",
+  "expression": "tired",
+  "condition": "fu_usage=answer",
+  "nextId": ""
+ },
+ {
+  "id": "fu_edit",
+  "sceneId": "after",
+  "speakerId": "chian",
+  "text": "출입 시간 하나 바꾸려는디, 이 HTML은 어디를 고쳐야 되는 거요?",
+  "expression": "thinking",
+  "condition": "missing_req",
+  "nextId": "fu_edit_2"
+ },
+ {
+  "id": "fu_edit_2",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "담당자 수정 가능, 그게 요구사항에 없었던 거죠. 지금 정해요.",
+  "expression": "focused",
+  "condition": "missing_req",
+  "nextId": ""
+ },
+ {
+  "id": "fu_edit_direct",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "이번엔 제가 직접 고칠게요. 다음 수정 때도 저한테 연락 주세요.",
+  "expression": "neutral",
+  "condition": "fu_edit=direct",
+  "nextId": ""
+ },
+ {
+  "id": "fu_edit_rebuild",
+  "sceneId": "after",
+  "speakerId": "heoin",
+  "text": "안내 문구를 표 파일로 빼면 담당자가 표만 고치면 되겠는디요? 그렇게 바꿔봐요!",
+  "expression": "excited",
+  "condition": "fu_edit=rebuild",
+  "nextId": ""
+ },
+ {
+  "id": "fu_prompt",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "같은 프롬프트로 다시 만들었는데 결과가 달라요. 무엇을 근거로 만든 건지가 없네요.",
+  "expression": "focused",
+  "condition": "ev3_level=3 & ev2_method=quick",
+  "nextId": ""
+ },
+ {
+  "id": "fu_prompt_fix",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "근거 자료를 같이 붙이니까 결과가 맞춰지네요. 확인 기록도 남겨 둡시다.",
+  "expression": "calm",
+  "condition": "fu_prompt=fix",
+  "nextId": ""
+ },
+ {
+  "id": "fu_prompt_keep",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "이번엔 이전 결과를 쓰되, '근거 미첨부'로 표시해 둡시다.",
+  "expression": "neutral",
+  "condition": "fu_prompt=keep",
+  "nextId": ""
+ },
+ {
+  "id": "fu_ai",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "AI 이용권이 얼마 안 남았어요. 수정 범위를 줄이든지, 손으로 고쳐야겠어요.",
+  "expression": "worried",
+  "condition": "ai<30",
+  "nextId": ""
+ },
+ {
+  "id": "fu_ai_reduce",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "좋아요. 필수 안내만 고치고 나머지는 다음 차수로 넘기죠.",
+  "expression": "focused",
+  "condition": "fu_ai=reduce",
+  "nextId": ""
+ },
+ {
+  "id": "fu_ai_manual",
+  "sceneId": "after",
+  "speakerId": "chian",
+  "text": "몇 줄은 제가 손으로 할게요. 이런 건 사람이 빠르제.",
+  "expression": "happy",
+  "condition": "fu_ai=manual",
+  "nextId": ""
+ },
+ {
+  "id": "fu_bulk",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "분석에 시간을 많이 써서 마감이 코앞이에요. 핵심 업무부터 정하죠.",
+  "expression": "worried",
+  "condition": "ev1_B=human",
+  "nextId": ""
+ },
+ {
+  "id": "fu_bulk_focus",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "설문 문항은 다섯 개로 줄이고, 안내자료부터 마감합시다.",
+  "expression": "focused",
+  "condition": "fu_bulk=focus",
+  "nextId": ""
+ },
+ {
+  "id": "fu_bulk_overtime",
+  "sceneId": "after",
+  "speakerId": "yunjin",
+  "text": "오늘 좀 늦게까지 해서 다 맞출게요…",
+  "expression": "tired",
+  "condition": "fu_bulk=overtime",
+  "nextId": ""
+ },
+ {
+  "id": "fu_unverified",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "분석표의 '식사 불만 1위', 근거 원문이 있나요? 보고 전에 확인하고 싶어요.",
+  "expression": "focused",
+  "condition": "ev1_B=full",
+  "nextId": ""
+ },
+ {
+  "id": "fu_unverified_check",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "표본을 보니 주차 이야기가 섞여 있었네요. 그때도 주차 안내가 늦게 나갔어요.",
+  "expression": "calm",
+  "condition": "fu_unverified=check",
+  "nextId": ""
+ },
+ {
+  "id": "fu_unverified_skip",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "근거 없이 올리면 다음 차수 기획이 엉뚱한 방향으로 갈 수 있어요.",
+  "expression": "sharp",
+  "condition": "fu_unverified=skip",
+  "nextId": ""
+ },
+ {
+  "id": "fu_reuse",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "다음 차수 자료, 공유함에서 바로 찾아서 고쳤어요. 사용법이 있으니까 금방이네요.",
+  "expression": "smile",
+  "condition": "shared & level>=2",
+  "nextId": "fu_reuse_2"
+ },
+ {
+  "id": "fu_reuse_2",
+  "sceneId": "after",
+  "speakerId": "heoin",
+  "text": "그럼 남는 시간에 신입사원 퀴즈 카드 만들어봐도 돼요? 아이디어 있당께요!",
+  "expression": "excited",
+  "condition": "shared & level>=2",
+  "nextId": ""
+ },
+ {
+  "id": "fu_reuse_quiz",
+  "sceneId": "after",
+  "speakerId": "heoin",
+  "text": "첫날 동선을 퀴즈로 풀게 해봤어요. 안내문보다 훨씬 잘 보겄제요?",
+  "expression": "happy",
+  "condition": "fu_reuse=quiz",
+  "nextId": ""
+ },
+ {
+  "id": "fu_reuse_keep",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "여유는 남겨 둡시다. 당일 변수가 꼭 생기니까요.",
+  "expression": "smile",
+  "condition": "fu_reuse=keep",
+  "nextId": ""
+ },
+ {
+  "id": "fu_review",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "다음 차수 자료에서도 검토 흐름이 오래된 강의실 정보를 잡아냈어요.",
+  "expression": "smile",
+  "condition": "review_flow",
+  "nextId": ""
+ },
+ {
+  "id": "fu_review_go",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "흐름을 남겨둔 덕분이네요. 이 방식은 팀 표준으로 써봅시다.",
+  "expression": "smile",
+  "condition": "fu_review=adopt",
+  "nextId": ""
+ },
+ {
+  "id": "rp_hong_01",
+  "sceneId": "report",
+  "speakerId": "hong",
+  "text": "보고 전에 확인할게요. 무엇을 완료했고, 무엇이 시제품이나 연계 대기인가요?",
+  "expression": "focused",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "rp_honest",
+  "sceneId": "report",
+  "speakerId": "hong",
+  "text": "좋아요. 상태가 정확하니 제가 판단하기 쉽네요.",
+  "expression": "smile",
+  "condition": "ev_report=honest",
+  "nextId": ""
+ },
+ {
+  "id": "rp_over",
+  "sceneId": "report",
+  "speakerId": "hong",
+  "text": "전부 완료라고 했는데, 안내 도구는 시제품이죠? 응답은 실제로 어디에 저장되나요?",
+  "expression": "serious",
+  "condition": "ev_report=over",
+  "nextId": "rp_over_fix"
+ },
+ {
+  "id": "rp_over_fix",
+  "sceneId": "report",
+  "speakerId": "yunjin",
+  "text": "죄송합니다. 상태를 다시 구분해서 올리겠습니다.",
+  "expression": "sheepish",
+  "condition": "ev_report=over",
+  "nextId": ""
+ },
+ {
+  "id": "end_hong_01",
+  "sceneId": "ending",
+  "speakerId": "hong",
+  "text": "AI를 쓴 횟수보다, 우리 팀의 일을 어떻게 연결했는지가 중요했네요.",
+  "expression": "smile",
+  "condition": "always",
+  "nextId": "end_yunjin_01"
+ },
+ {
+  "id": "end_yunjin_01",
+  "sceneId": "ending",
+  "speakerId": "yunjin",
+  "text": "AI만 잘 써서는 안 되네요. 팀에서 아는 거랑 같이 연결해야 일이 되겠어요.",
+  "expression": "bright",
+  "condition": "always",
+  "nextId": ""
+ },
+ {
+  "id": "amb_intro_jongyun",
+  "sceneId": "intro",
+  "speakerId": "jongyun",
+  "text": "지난 차수 자료가 꽤 남아 있어요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_intro_chian",
+  "sceneId": "intro",
+  "speakerId": "chian",
+  "text": "계획대로만 되면 좋제. 당일 변수는 늘 있어요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_intro_heeyeon",
+  "sceneId": "intro",
+  "speakerId": "heeyeon",
+  "text": "해결하려는 문제부터 분명히 하죠.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_intro_heoin",
+  "sceneId": "intro",
+  "speakerId": "heoin",
+  "text": "안내문을 안 읽는 게 문제면, 안내문 말고 다른 걸 만들어야죠.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev1_hong",
+  "sceneId": "ev1",
+  "speakerId": "hong",
+  "text": "무엇을 줄이고 무엇은 사람이 확인해야 하는지부터 정해봐요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev1_sujin",
+  "sceneId": "ev1",
+  "speakerId": "sujin",
+  "text": "남은 업무 시간도 같이 봐야 해요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev1_jongyun",
+  "sceneId": "ev1",
+  "speakerId": "jongyun",
+  "text": "분류가 끝나면 의견이 나온 맥락은 제가 설명할게요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev1_heoin",
+  "sceneId": "ev1",
+  "speakerId": "heoin",
+  "text": "300건이면 재밌는 패턴 나올 것 같은디요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev2_sujin",
+  "sceneId": "ev2",
+  "speakerId": "sujin",
+  "text": "흐름은 기본안이 있어요. 두세 군데만 바꿔보세요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev2_chian",
+  "sceneId": "ev2",
+  "speakerId": "chian",
+  "text": "작년 도구는 의견 남기는 칸이 없었을 거요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev3_heeyeon",
+  "sceneId": "ev3",
+  "speakerId": "heeyeon",
+  "text": "최신본은 이름이 아니라 기록으로 골라요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ev3_jongyun",
+  "sceneId": "ev3",
+  "speakerId": "jongyun",
+  "text": "변경 이유를 남겨두면 다음에 다시 묻지 않아요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_hong",
+  "sceneId": "after",
+  "speakerId": "hong",
+  "text": "수습 경로가 있으면 괜찮아요. 숨기지만 마세요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_sujin",
+  "sceneId": "after",
+  "speakerId": "sujin",
+  "text": "다음 사람이 바로 이어받을 수 있었는지가 중요해요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_jongyun",
+  "sceneId": "after",
+  "speakerId": "jongyun",
+  "text": "그때도 비슷한 일이 있었죠.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_chian",
+  "sceneId": "after",
+  "speakerId": "chian",
+  "text": "현장에서 막히는 건 결국 사소한 데서 나와라.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_heeyeon",
+  "sceneId": "after",
+  "speakerId": "heeyeon",
+  "text": "근거 없는 결론은 다음 기획을 틀어요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_after_heoin",
+  "sceneId": "after",
+  "speakerId": "heoin",
+  "text": "남는 시간 있으면 퀴즈 카드도 해보고 싶당께요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ending_sujin",
+  "sceneId": "ending",
+  "speakerId": "sujin",
+  "text": "공유함 규칙부터 같이 정해봐요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ending_jongyun",
+  "sceneId": "ending",
+  "speakerId": "jongyun",
+  "text": "과거 사례도 근거 자료와 같이 남기면 좋겠어요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ending_chian",
+  "sceneId": "ending",
+  "speakerId": "chian",
+  "text": "바로 할 일이랑 맡길 일 구분하는 게 핵심이제.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ending_heeyeon",
+  "sceneId": "ending",
+  "speakerId": "heeyeon",
+  "text": "완료 기준을 먼저 합의하면 검토가 빨라져요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ },
+ {
+  "id": "amb_ending_heoin",
+  "sceneId": "ending",
+  "speakerId": "heoin",
+  "text": "다음엔 처음부터 공유함에 만들게요.",
+  "expression": "smile",
+  "condition": "map: 가까이 가면",
+  "nextId": ""
+ }
+]
