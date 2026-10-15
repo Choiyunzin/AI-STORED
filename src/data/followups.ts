@@ -96,7 +96,7 @@ export const FOLLOWUPS: Followup[] = [
   },
   {
     id: 'fu_edit', title: '담당자가 고칠 수 없는 HTML', positive: false, priority: 6, kind: 'choice',
-    cause: () => '사건 ②에서 요구사항 정리 없이 시제품을 만들고, 요구사항 확인을 거치지 않았습니다.',
+    cause: () => '사건 ②에서 요구사항 정리 없이 데모 버전을 만들고, 요구사항 확인을 거치지 않았습니다.',
     when: (s) => !!s.flags.missing_req,
     intro: ['fu_edit', 'fu_edit_2'],
     options: [

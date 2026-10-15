@@ -114,7 +114,7 @@ describe('전체 경로', () => {
       if (p.collect === 'request') expect(tool.status).toMatch(/요청 중/);
       // 산출물 상태와 결정이 일치
       const dv = deliverables(s);
-      expect(dv.find((x) => x.name === 'HTML 첫날 안내 도구')!.status).toMatch(/^시제품/);
+      expect(dv.find((x) => x.name === 'HTML 첫날 안내 도구')!.status).toMatch(/^데모 버전/);
     }
     expect(n).toBeGreaterThan(4000);
     // 모든 후속 사건과 회고 규칙이 어떤 경로에서든 한 번 이상 나온다

@@ -174,7 +174,7 @@
   "id": "ev2_yunjin_01",
   "sceneId": "ev2",
   "speakerId": "yunjin",
-  "text": "화면 시제품은 AI로 만들어볼 수 있어요.",
+  "text": "화면 데모 버전은 AI로 만들어볼 수 있어요.",
   "expression": "bright",
   "condition": "always",
   "nextId": "ev2_heeyeon_01"
@@ -840,7 +840,7 @@
   "id": "rp_hong_01",
   "sceneId": "report",
   "speakerId": "hong",
-  "text": "보고 전에 확인할게요. 무엇을 완료했고, 무엇이 시제품이나 연계 대기인가요?",
+  "text": "보고 전에 확인할게요. 무엇을 완료했고, 무엇이 데모 버전이나 연계 대기인가요?",
   "expression": "focused",
   "condition": "always",
   "nextId": ""
@@ -858,7 +858,7 @@
   "id": "rp_over",
   "sceneId": "report",
   "speakerId": "hong",
-  "text": "전부 완료라고 했는데, 안내 도구는 시제품이죠? 응답은 실제로 어디에 저장되나요?",
+  "text": "전부 완료라고 했는데, 안내 도구는 데모 버전이죠? 응답은 실제로 어디에 저장되나요?",
   "expression": "serious",
   "condition": "ev_report=over",
   "nextId": "rp_over_fix"

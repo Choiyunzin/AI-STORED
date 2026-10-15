@@ -54,7 +54,7 @@ export const EV1_SCOPE: Record<Ev1Scope, { label: string; note: string; perAiTas
 export type Ev2Method = 'quick' | 'prd' | 'reuse';
 export const EV2_METHODS: Record<Ev2Method, Option & { pros: string; cons: string; tag: string }> = {
   quick: {
-    id: 'quick', tag: 'A', label: '짧은 요청으로 즉시 시제품', cost: { slack: 1, ai: 12 },
+    id: 'quick', tag: 'A', label: '짧은 요청으로 데모 버전 바로 만들기', cost: { slack: 1, ai: 12 },
     note: '한 줄 요청으로 화면부터 띄운다.', pros: '빠르게 화면을 확인하고 의견을 받을 수 있다.', cons: '조건이 빠졌는지는 나중에 확인해야 한다.',
   },
   prd: {
@@ -99,7 +99,7 @@ export const EV2_COLLECT: Record<Ev2Collect, Option & { status: string }> = {
     note: '정보보호·IT 승인이 필요하다. 승인 전에는 저장되지 않는다.', status: '사내 API/DB 연계 요청 중 (현재 저장 안 됨)',
   },
   exclude: {
-    id: 'exclude', label: '이번 시제품에서 수집 기능 제외', cost: { slack: 0, ai: 0 },
+    id: 'exclude', label: '이번 데모 버전에서 수집 기능 제외', cost: { slack: 0, ai: 0 },
     note: '화면에 "의견 수집은 별도 설문으로"라고 명확히 표시한다.', status: '수집 기능 없음 (화면에 명시)',
   },
 };
@@ -139,7 +139,7 @@ export const EV3_KEY: Record<Ev3Key, Option> = {
 // ── 최종 보고 ───────────────────────────────────────────
 export type ReportChoice = 'honest' | 'over';
 export const REPORT: Record<ReportChoice, Option> = {
-  honest: { id: 'honest', label: '완료 / 시제품 / 연계 대기를 구분해 보고', cost: { slack: 0, ai: 0 }, note: '현재 상태 그대로.' },
+  honest: { id: 'honest', label: '완료 / 데모 버전 / 연계 대기를 구분해 보고', cost: { slack: 0, ai: 0 }, note: '현재 상태 그대로.' },
   over: { id: 'over', label: '“전부 완료했습니다”로 보고', cost: { slack: 0, ai: 0 }, note: '보고서가 짧아진다.' },
 };
 export const REPORT_CORRECTION: Cost = { slack: 1, ai: 0 };

@@ -39,7 +39,7 @@ export const ev2Scene: Scene = {
       root.querySelectorAll<HTMLButtonElement>('[data-m]').forEach((b) => b.addEventListener('click', () => {
         const lines = ctx.act((st) => commitEv2Method(st, b.dataset.m as Ev2Method));
         ctx.sound.sfx('file');
-        ctx.dlg.systemMessage('첫날_안내도구.html 시제품이 내 작업함에 생성됐습니다', 'file');
+        ctx.dlg.systemMessage('첫날_안내도구.html 데모 버전이 내 작업함에 생성됐습니다', 'file');
         ctx.dlg.play([...lines, 'ev2_flow_hint']);
       }));
       return;
@@ -49,9 +49,9 @@ export const ev2Scene: Scene = {
     const methodOut = m === 'prd'
       ? `<div class="prd mini"><div><h5>대상·목적</h5><p>신입사원 30명, 첫날 정보 찾기 + 의견</p></div><div><h5>필수 기능</h5><p>안내 / 의견 남기기 / 담당자 수정</p></div><div><h5>실행·저장 조건</h5><p>사내 접속 · 승인된 저장 경로</p></div><div><h5>완료 기준</h5><p>올해 출입 절차 · 요구사항 확인 · 승인</p></div></div>`
       : m === 'quick'
-        ? `<div class="warn-box">시제품이 바로 떴습니다. 화면에 <b>“의견 제출 → 자동 취합 완료”</b> 버튼이 있지만, 실제 저장 경로는 정한 적이 없습니다.</div>`
+        ? `<div class="warn-box">데모 버전이 바로 떴습니다. 화면에 <b>“의견 제출 → 자동 취합 완료”</b> 버튼이 있지만, 실제 저장 경로는 정한 적이 없습니다.</div>`
         : `<div class="info-box">작년 승인 도구를 복사했습니다. 화면 구조는 재사용, <b>의견 남기기 기능 없음</b>·<b>출입 절차는 작년 기준</b>이라 확인이 필요합니다.</div>`;
-    const methodBar = `<div class="method-bar"><span>선택한 방식: <b>${EV2_METHODS[m].tag}. ${EV2_METHODS[m].label}</b></span><button type="button" class="btn small" data-open="f_tool">🌐 시제품 보기</button>${m === 'prd' ? '<button type="button" class="btn small" data-open="f_prd">미니 PRD</button>' : m === 'quick' ? '<button type="button" class="btn small" data-open="f_req">요청 기록</button>' : '<button type="button" class="btn small" data-open="f_reuse">재사용 기록</button>'}</div>${methodOut}`;
+    const methodBar = `<div class="method-bar"><span>선택한 방식: <b>${EV2_METHODS[m].tag}. ${EV2_METHODS[m].label}</b></span><button type="button" class="btn small" data-open="f_tool">🌐 데모 버전 보기</button>${m === 'prd' ? '<button type="button" class="btn small" data-open="f_prd">미니 PRD</button>' : m === 'quick' ? '<button type="button" class="btn small" data-open="f_req">요청 기록</button>' : '<button type="button" class="btn small" data-open="f_reuse">재사용 기록</button>'}</div>${methodOut}`;
 
     // 2단계: 오케스트레이션
     if (!d.ev2_input) {
@@ -124,8 +124,8 @@ export const ev2Scene: Scene = {
     root.innerHTML = `${head}${methodBar}${flowResult}
       <div class="result-card"><h3>사건 ② 산출물</h3>
         <ul class="result-list">${logs.map((l) => `<li>${esc(l.label)} ${costChip({ slack: l.slack, ai: l.ai })}</li>`).join('')}</ul>
-        <p><b>HTML 시제품</b> · 검토: ${esc(tool?.review || '')}<br/><b>응답 저장 상태</b>: <span class="tag ${d.ev2_collect === 'survey' ? 'ok' : 'warn'}">${esc(tool?.status || '')}</span></p>
-        <div class="row-btns"><button type="button" class="btn small" data-open="f_tool">🌐 시제품</button><button type="button" class="btn small" data-open="f_review">🗒 검토 기록</button>${d.ev2_collect === 'request' ? '<button type="button" class="btn small" data-open="f_api">🗒 지원 요청</button>' : ''}</div>
+        <p><b>HTML 데모 버전</b> · 검토: ${esc(tool?.review || '')}<br/><b>응답 저장 상태</b>: <span class="tag ${d.ev2_collect === 'survey' ? 'ok' : 'warn'}">${esc(tool?.status || '')}</span></p>
+        <div class="row-btns"><button type="button" class="btn small" data-open="f_tool">🌐 데모 버전</button><button type="button" class="btn small" data-open="f_review">🗒 검토 기록</button>${d.ev2_collect === 'request' ? '<button type="button" class="btn small" data-open="f_api">🗒 지원 요청</button>' : ''}</div>
       </div>
       <div class="actions"><button type="button" class="btn primary big" data-testid="to-ev3">사건 ③으로 ▶</button></div>`;
     bindOpen(root, ctx);

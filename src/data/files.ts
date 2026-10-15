@@ -64,13 +64,13 @@ function noticeDoc(s: GameState): string {
     <p class="muted">${s.decisions.ev1_A === 'human' ? '치안 매니저가 직접 수정 · 바뀐 3줄만 확인' : 'AI 초안 3줄 + 사람 확인'}</p>`;
 }
 
-/** HTML 시제품 미리보기 (sandbox iframe srcdoc, 스크립트 없음) */
+/** HTML 데모 버전 미리보기 (sandbox iframe srcdoc, 스크립트 없음) */
 export function toolSrcdoc(s: GameState): string {
   const entry = s.flags.stale_html ? OLD_ENTRY : (s.decisions.ev2_input ? NEW_ENTRY : (s.decisions.ev2_method === 'reuse' ? OLD_ENTRY : '확인 중'));
   const c = s.decisions.ev2_collect;
   const collect = !c
     ? (s.decisions.ev2_method === 'quick'
-      ? '<button class="fake">의견 제출 → 자동 취합 완료</button><p class="note">⚠ 시제품이 만든 버튼입니다. 실제 저장 경로는 없습니다.</p>'
+      ? '<button class="fake">의견 제출 → 자동 취합 완료</button><p class="note">⚠ AI가 데모 버전에 넣은 버튼입니다. 실제 저장 경로는 없습니다.</p>'
       : '<p class="note">응답 저장 방식 미정</p>')
     : c === 'survey' ? '<a href="#" onclick="return false">의견 남기기 (승인 설문 도구로 이동)</a><p class="note">응답은 승인된 설문 도구에 저장됩니다.</p>'
     : c === 'request' ? '<p class="note">의견 수집: 사내 API/DB 연계 요청 중 — 현재 이 화면에서는 저장되지 않습니다.</p>'
@@ -82,7 +82,7 @@ export function toolSrcdoc(s: GameState): string {
   main{padding:12px 16px}details{background:#fff;border:1px solid #dde3ef;border-radius:8px;margin:8px 0;padding:8px 12px}
   summary{cursor:pointer;font-weight:600}.note{color:#555;font-size:12px}.fake{background:#2e9b6a;color:#fff;border:0;border-radius:6px;padding:8px 12px}
   .broken{color:#c33;text-decoration:line-through}a{color:#2d5bd3}
-  </style></head><body><header>첫날 안내 · 신입사원 온보딩 (시제품)</header><main>
+  </style></head><body><header>첫날 안내 · 신입사원 온보딩 (데모 버전)</header><main>
   <details open><summary>어디로 들어가나요?</summary><p>${entry}</p></details>
   <details><summary>교육은 어디서, 언제?</summary><p>연수동 2층 201호 · 09:00 시작</p></details>
   <details><summary>점심은?</summary><p>연수동 1층 라운지 (도시락)</p></details>
@@ -152,7 +152,7 @@ export function fileContent(f: FileItem, s: GameState): string {
     case 'f_prd': return prd(s);
     case 'f_req': return `<pre class="code">"신입사원 첫날 안내 도구 HTML로 만들어줘. 의견 받는 버튼도."</pre><p class="muted">대상·조건·완료 기준이 없는 한 줄 요청 기록</p>`;
     case 'f_reuse': return `<p>작년 승인된 "첫날 안내" 도구를 복사해 수정.</p><ul><li>재사용: 화면 구조, 질문 목록</li><li>한계: 의견 남기기 기능 없음 → 추가 필요</li><li>최신성: 출입 절차가 작년 기준 → 확인 필요</li></ul>`;
-    case 'f_tool': return `<p class="muted">시제품 미리보기 · 응답 저장 상태: <b>${esc(f.status || '미정')}</b></p><iframe class="proto" sandbox="" title="HTML 시제품 미리보기" srcdoc="${esc(toolSrcdoc(s))}"></iframe>`;
+    case 'f_tool': return `<p class="muted">데모 버전 미리보기 · 응답 저장 상태: <b>${esc(f.status || '미정')}</b></p><iframe class="proto" sandbox="" title="HTML 데모 버전 미리보기" srcdoc="${esc(toolSrcdoc(s))}"></iframe>`;
     case 'f_review': return reviewRecord(s);
     case 'f_api': return `<dl class="meta"><dt>요청</dt><dd>신입사원 의견 응답을 사내 DB에 저장하는 API 연계</dd><dt>상태</dt><dd><span class="tag warn">요청 중 · 승인/연결 전</span></dd><dt>예상</dt><dd>정보보호·IT 검토 후 2주 (가상 일정)</dd></dl><p class="muted">승인 전까지 HTML은 응답을 저장하지 않습니다.</p>`;
     case 'f_guide_base': return versionPreview(s.decisions.ev3_version || 'v3') + (s.decisions.fu_stale === 'fix' ? '<p class="ok-box">사후 수정: 올해 출입 절차로 교체됨</p>' : '');

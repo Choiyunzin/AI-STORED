@@ -147,7 +147,7 @@ export function commitEv2Method(s: GameState, m: Ev2Method): string[] {
     upsertFile(s, { id: 'f_reuse', name: '기존도구_재사용기록.txt', kind: 'record', owner: 'yunjin', location: 'mine', review: '종윤 제공 · 작년 승인본', reusable: false, reuseNote: '아직 공유 정리 전' });
   }
   upsertFile(s, {
-    id: 'f_tool', name: '첫날_안내도구.html', kind: 'html', owner: 'yunjin', location: 'mine', review: '시제품 · 검증 전',
+    id: 'f_tool', name: '첫날_안내도구.html', kind: 'html', owner: 'yunjin', location: 'mine', review: '데모 버전 · 검증 전',
     reusable: false, reuseNote: '아직 공유 정리 전', status: m === 'quick' ? 'AI가 "자동 취합 완료" 버튼을 만듦 (실제 저장 경로 없음)' : '응답 저장 방식 미정',
   });
   const lines = m === 'quick' ? ['ev2_m_quick', 'ev2_m_quick_2'] : m === 'prd' ? ['ev2_m_prd', 'ev2_m_prd_2'] : ['ev2_m_reuse', 'ev2_m_reuse_2'];
@@ -425,7 +425,7 @@ export function deliverables(s: GameState): Deliverable[] {
   if (s.flags.stale_html) toolIssues.push('작년 출입 절차');
   if (s.flags.missing_req) toolIssues.push('담당자 수정 불가');
   if (s.flags.link_bug) toolIssues.push('깨진 링크');
-  out.push({ name: 'HTML 첫날 안내 도구', status: `시제품${toolIssues.length ? ` · 남은 문제: ${toolIssues.join(', ')}` : ' · 확인된 문제 없음'}`, kind: toolIssues.length ? 'issue' : 'proto' });
+  out.push({ name: 'HTML 첫날 안내 도구', status: `데모 버전${toolIssues.length ? ` · 남은 문제: ${toolIssues.join(', ')}` : ' · 확인된 문제 없음'}`, kind: toolIssues.length ? 'issue' : 'proto' });
   const c = d.ev2_collect as Ev2Collect | undefined;
   if (c) out.push({ name: '의견 수집', status: EV2_COLLECT[c].status, kind: c === 'survey' ? 'done' : c === 'request' ? 'pending' : 'excluded' });
   const base = s.files.find((f) => f.id === 'f_guide_base');
