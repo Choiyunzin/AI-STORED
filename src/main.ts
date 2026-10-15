@@ -181,11 +181,13 @@ function showTitle() {
       <button type="button" class="btn ${saved && saved.scene !== 'ending' ? '' : 'primary'} big" data-t="voice" data-testid="start-voice">🔊 소리 켜고 시작</button>
       <button type="button" class="btn big" data-t="natural" data-testid="start-natural" title="Edge·Chrome의 온라인 신경망 음성을 씁니다. 대사 텍스트가 브라우저 제조사의 음성 서비스로 전송됩니다.">🎙 자연스러운 음성으로 시작 <small>(온라인 음성)</small></button>
       <button type="button" class="btn big" data-t="subtitle" data-testid="start-subtitle">💬 자막으로 시작</button>
+      <button type="button" class="btn ghost" data-intro data-testid="title-intro">🎬 게임 소개 먼저 보기</button>
     </div>
     <p class="muted small">가상의 업무 환경입니다. 외부 AI 호출·실제 업로드·개인정보 수집이 없으며, 모든 인명·연락처·키는 가상 데이터입니다.<br/>선택 기록은 이 브라우저(localStorage)에만 저장됩니다.</p>
   </div>`;
   document.body.appendChild(t);
   (t.querySelector('.btn.primary') as HTMLElement)?.focus();
+  t.querySelector('[data-intro]')!.addEventListener('click', () => { sound.init(); playCutscene(sound, () => (t.querySelector('.btn.primary') as HTMLElement)?.focus()); });
   t.querySelectorAll<HTMLButtonElement>('[data-t]').forEach((b) => b.addEventListener('click', () => {
     const kind = b.dataset.t!;
     // 사용자 클릭 안에서 오디오 초기화

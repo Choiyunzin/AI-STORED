@@ -7,6 +7,13 @@ const CPS = 32; // 초당 글자 수
 
 function visual(v: CutVisual): string {
   switch (v) {
+    case 'about':
+      return `<div class="cv-about">
+        <div class="ab" style="--d:0"><div class="ab-stage walk"><span class="ab-hong"><span class="avatar" style="--s:44px">${avatarSvg('hong', 'smile')}</span><i class="ab-mark">!</i></span><span class="ab-me"><span class="avatar" style="--s:44px">${avatarSvg('yunjin', 'bright')}</span></span><span class="ab-arrow">➜</span></div><b>① 걸어가서</b></div>
+        <div class="ab" style="--d:1"><div class="ab-stage talk"><span class="avatar" style="--s:44px">${avatarSvg('hong', 'focused')}</span><span class="ab-bubble">신입 30명이<br/>들어와요!</span><span class="avatar" style="--s:44px">${avatarSvg('yunjin', 'smile')}</span></div><b>② 이야기 듣고</b></div>
+        <div class="ab" style="--d:2"><div class="ab-stage pc"><div class="ab-mon"><i class="c1">🧑‍💼</i><i class="c2">🤖+🧑</i><i class="c3">🤖</i><span class="ab-cursor">👆</span></div></div><b>③ PC에서 고르고</b></div>
+        <div class="ab" style="--d:3"><div class="ab-stage res"><p class="r1">✅ 잘한 점</p><p class="r2">✅ 잘한 점</p><p class="r3">🔁 바꿔볼 점</p></div><b>④ 결과 돌아보기</b></div>
+      </div>`;
     case 'calendar':
       return `<div class="cv-cal"><div class="cal-top">10월</div><div class="cal-days">${['월', '화', '수', '목', '금', '토', '일'].map((d) => `<b>${d}</b>`).join('')}${Array.from({ length: 14 }, (_, i) => `<span class="${i === 0 ? 'today' : i === 7 ? 'dday' : ''}" style="--d:${i}">${i + 13}</span>`).join('')}</div><div class="cal-badge">D-7</div></div>`;
     case 'yunjin':

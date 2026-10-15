@@ -207,12 +207,13 @@ try {
   await page.waitForSelector('#cutscene');
   await page.waitForTimeout(250);
   const partial = await page.locator('.cut-text p').first().innerText();
-  check('컷신: 타자기처럼 한 글자씩 나옴', partial.length > 0 && partial.length < '다음 주 월요일, 신입사원 30명이 입사합니다.'.length, `"${partial}"`);
+  check('컷신: 타자기처럼 한 글자씩 나옴', partial.length > 0 && partial.length < '회사에서 AI를 어떻게 나눠 쓰면 좋을지, 직접 해보는 10분짜리 업무 게임이에요.'.length, `"${partial}"`);
   check('컷신: TTS로 읽지 않음', (await page.evaluate(() => window.__ttsLog.texts.length)) === 0);
   await page.screenshot({ path: `${SHOTS}cut-1.png` });
   await page.locator('[data-testid=cut-next]').click();
-  check('컷신: 클릭하면 문장 즉시 완성', (await page.locator('.cut-text').innerText()).includes('운영 준비가 아직 남았어요'));
-  for (let i = 0; i < 5; i++) { await page.locator('[data-testid=cut-next]').click(); await page.waitForTimeout(80); }
+  check('컷신: 클릭하면 문장 즉시 완성', (await page.locator('.cut-text').innerText()).includes('잘한 점과 아쉬운 점을 돌아봐요'));
+  check('컷신: 첫 장은 게임 소개 4컷 애니메이션', await page.locator('.cv-about .ab').count() === 4);
+  for (let i = 0; i < 7; i++) { await page.locator('[data-testid=cut-next]').click(); await page.waitForTimeout(80); }
   await page.waitForTimeout(1500);
   const txt = await page.locator('.cut-card').innerText();
   check('컷신: 작업 여유 규칙 설명', /작업 여유/.test(txt), txt.split('\n')[1]);
