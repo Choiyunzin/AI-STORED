@@ -1,5 +1,5 @@
 import type { Scene } from './ctx';
-import { costChip, sceneHeader } from './ctx';
+import { costChip, sceneHeader, stepper, icon } from './ctx';
 import {
   EV2_METHODS, EV2_INPUT, EV2_TIMING, EV2_VERIFY, EV2_COLLECT,
   type Ev2Method, type Ev2Input, type Ev2Timing, type Ev2Verify, type Ev2Collect,
@@ -19,7 +19,8 @@ export const ev2Scene: Scene = {
   render: (root, ctx) => {
     const s = ctx.store.state;
     const d = s.decisions;
-    const head = sceneHeader('사건 ② · 약 2분', '일단 만들었는데, 무엇을 위한 도구지?', '신입사원이 첫날 정보를 찾고 간단한 의견을 남길 수 있는 HTML 안내 도구를 준비합니다.');
+    const head = sceneHeader('사건 ② · 약 2분', '일단 만들었는데, 무엇을 위한 도구지?', '신입사원이 첫날 정보를 찾고 간단한 의견을 남길 수 있는 HTML 안내 도구를 준비합니다.')
+      + stepper(['일하는 방식', 'AI 흐름 구성', '의견 수집 경로', '결과'], !d.ev2_method ? 0 : !d.ev2_input ? 1 : !d.ev2_collect ? 2 : 3);
     const conditions = `<div class="known"><b>알려진 조건</b><ul>
       <li>사내 접속에서만 열려야 함</li><li>올해 바뀐 출입 절차 반영</li><li>담당자가 문구를 직접 수정할 수 있어야 함</li>
       <li>여러 사람의 의견을 자동 취합하려면 <b>별도의 승인된 수집 경로</b>가 필요</li></ul></div>`;
@@ -30,7 +31,7 @@ export const ev2Scene: Scene = {
       <h3 class="step-t">1. 일하는 방식 고르기</h3>
       <div class="cards3">${(Object.keys(EV2_METHODS) as Ev2Method[]).map((k) => {
         const m = EV2_METHODS[k];
-        return `<article class="choice-card"><p class="tagline">${m.tag}</p><h4>${m.label}</h4><p>${m.note}</p>
+        return `<article class="choice-card">${icon({ quick: '⚡', prd: '📋', reuse: '♻️' }[k])}<p class="tagline">${m.tag}</p><h4>${m.label}</h4><p>${m.note}</p>
           <p class="pro">＋ ${m.pros}</p><p class="con">－ ${m.cons}</p>${costChip(m.cost, s)}
           <button type="button" class="btn primary" data-m="${k}" data-testid="ev2-method-${k}">이 방식으로</button></article>`;
       }).join('')}</div>
@@ -103,10 +104,10 @@ export const ev2Scene: Scene = {
     if (!d.ev2_collect) {
       root.innerHTML = `${head}${methodBar}<h3 class="step-t">2. 흐름 실행 결과</h3>${flowResult}
       <h3 class="step-t">3. 의견은 어디에 모이나요? <small class="muted">HTML을 공유함에 올리는 것과 응답을 서버/DB에 모으는 것은 다른 기능입니다</small></h3>
-      <div class="cards3">${(Object.keys(EV2_COLLECT) as Ev2Collect[]).map((k) => `<article class="choice-card"><h4>${EV2_COLLECT[k].label}</h4><p>${EV2_COLLECT[k].note}</p>
+      <div class="cards3">${(Object.keys(EV2_COLLECT) as Ev2Collect[]).map((k) => `<article class="choice-card">${icon({ survey: '📮', request: '🔌', exclude: '🚫' }[k])}<h4>${EV2_COLLECT[k].label}</h4><p>${EV2_COLLECT[k].note}</p>
         <p class="muted">표시될 상태: ${EV2_COLLECT[k].status}</p>${costChip(EV2_COLLECT[k].cost, s)}
         <button type="button" class="btn primary" data-c="${k}" data-testid="ev2-collect-${k}">선택</button></article>`).join('')}
-        <article class="choice-card disabled" aria-disabled="true"><h4>외부 무료 설문·폼 서비스</h4><p>사내 정책상 사용 불가</p><p class="muted">게임에서도 선택할 수 없습니다.</p><button type="button" class="btn" disabled>사용 불가</button></article>
+        <article class="choice-card disabled" aria-disabled="true">${icon('⛔')}<h4>외부 무료 설문·폼 서비스</h4><p>사내 정책상 사용 불가</p><p class="muted">게임에서도 선택할 수 없습니다.</p><button type="button" class="btn" disabled>사용 불가</button></article>
       </div>`;
       root.querySelectorAll<HTMLButtonElement>('[data-c]').forEach((b) => b.addEventListener('click', () => {
         const lines = ctx.act((st) => commitEv2Collect(st, b.dataset.c as Ev2Collect));

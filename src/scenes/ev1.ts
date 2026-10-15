@@ -1,5 +1,5 @@
 import type { Scene } from './ctx';
-import { costChip, sceneHeader } from './ctx';
+import { costChip, sceneHeader, stepper } from './ctx';
 import { EV1_MODES, EV1_TASKS, EV1_SCOPE, type Ev1Mode, type Ev1Scope } from '../data/options';
 import { commitEv1, ev1Preview } from '../logic/game';
 import { previewTaskA, previewTaskB } from '../data/files';
@@ -16,7 +16,8 @@ export const ev1Scene: Scene = {
   render: (root, ctx) => {
     const s = ctx.store.state;
     const done = !!s.decisions.ev1_A;
-    const head = sceneHeader('사건 ① · 약 2분', 'AI를 어디에 쓸까?', '두 업무가 동시에 도착했습니다. 업무마다 처리 방식을 배치하고, AI에게 넘길 자료를 고르세요.');
+    const head = sceneHeader('사건 ① · 약 2분', 'AI를 어디에 쓸까?', '두 업무가 동시에 도착했습니다. 업무마다 처리 방식을 배치하고, AI에게 넘길 자료를 고르세요.')
+      + stepper(['업무 A 방식', '업무 B 방식', '넘길 자료', '결과'], done ? 3 : !ui.A ? 0 : !ui.B ? 1 : 2);
 
     if (done) {
       const a = s.decisions.ev1_A as Ev1Mode, b = s.decisions.ev1_B as Ev1Mode;
@@ -44,16 +45,17 @@ export const ev1Scene: Scene = {
       const task = EV1_TASKS[t];
       const cur = ui[t];
       return `<article class="task-card ${cur ? 'placed' : ''}" draggable="true" data-task="${t}" aria-label="${task.title}">
-        <header><b>${task.title}</b><button type="button" class="btn tiny ghost" data-preview="${t}">자료 보기</button></header>
+        <header><span class="task-ic" aria-hidden="true">${t === 'A' ? '📝' : '📊'}</span><b>${task.title}</b><button type="button" class="btn tiny ghost" data-preview="${t}">자료 보기</button></header>
         <p>${task.desc}</p>
         <div class="seg" role="group" aria-label="${task.title} 처리 방식">
           ${EV1_MODES.map((m) => `<button type="button" class="seg-b" data-assign="${t}:${m.id}" aria-pressed="${cur === m.id}" data-testid="ev1-${t}-${m.id}">
-            <span>${task.options[m.id].label}</span>${costChip(task.options[m.id].cost)}<small>${task.options[m.id].note}</small></button>`).join('')}
+            <span class="seg-ic" aria-hidden="true">${{ human: '🧑‍💼', draft: '🤖+🧑', full: '🤖' }[m.id]}</span><span>${task.options[m.id].label}</span>${costChip(task.options[m.id].cost)}<small>${task.options[m.id].note}</small></button>`).join('')}
         </div></article>`;
     };
     const lane = (m: (typeof EV1_MODES)[number]) => {
       const here = (['A', 'B'] as Task[]).filter((t) => ui[t] === m.id);
-      return `<div class="lane" data-lane="${m.id}" aria-label="${m.label} 칸"><h4>${m.label}</h4>
+      const ic = { human: '🧑‍💼', draft: '🤖✍️ ➜ 🧑‍💼', full: '🤖' }[m.id];
+      return `<div class="lane lane-${m.id}" data-lane="${m.id}" aria-label="${m.label} 칸"><h4><span class="lane-ic">${ic}</span>${m.label}</h4>
         ${here.map((t) => `<div class="lane-chip">${t === 'A' ? '안내문 3줄' : '응답 300건'} ${costChip(EV1_TASKS[t].options[m.id].cost)}</div>`).join('') || '<p class="drop-hint">카드를 끌어 놓거나<br/>카드의 버튼을 누르세요</p>'}</div>`;
     };
 

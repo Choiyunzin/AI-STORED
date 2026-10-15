@@ -1,5 +1,5 @@
 import type { Scene, Ctx } from './ctx';
-import { costChip, sceneHeader } from './ctx';
+import { costChip, sceneHeader, stepper, icon } from './ctx';
 import { EV3_LEVEL, EV3_STORAGE, EV3_SCOPE, EV3_PII, EV3_KEY, type Ev3Level, type Ev3Storage, type Ev3Pii, type Ev3Key } from '../data/options';
 import {
   EV3_VERSIONS, markOpened, commitEv3Version, commitEv3Level, commitEv3Share, commitEv3Pii, commitEv3Key,
@@ -19,7 +19,9 @@ export const ev3Scene: Scene = {
   render: (root, ctx) => {
     const s = ctx.store.state;
     const d = s.decisions;
-    const head = sceneHeader('사건 ③ · 약 2분', '파일은 많은데, 쓸 수가 없다', '결과물이 각자의 작업함에 흩어졌습니다. 기준본을 고르고, 무엇을 어디까지 남길지 정하세요.');
+    const head = sceneHeader('사건 ③ · 약 2분', '파일은 많은데, 쓸 수가 없다', '결과물이 각자의 작업함에 흩어졌습니다. 기준본을 고르고, 무엇을 어디까지 남길지 정하세요.')
+      + stepper(['최신본', '남길 것', '저장 위치', '운영 명단', ...(needsKeyDecision(s) ? ['키 문자열'] : []), '공유 실행'],
+        !d.ev3_version ? 0 : !d.ev3_level ? 1 : !d.ev3_storage ? 2 : !d.ev3_pii ? 3 : needsKeyDecision(s) ? (!d.ev3_key ? 4 : 5) : 4);
     const done = (k: string) => d[k] !== undefined;
     const stepCls = (k: string, enabled: boolean) => `step ${done(k) ? 'done' : enabled ? 'active' : 'locked'}`;
 
@@ -33,7 +35,7 @@ export const ev3Scene: Scene = {
 
     // 2. 정리 수준
     const s2 = `<section class="${stepCls('ev3_level', done('ev3_version'))}"><h3 class="step-t">2. 무엇을 남길까 <small class="muted">정리를 많이 하면 지금 비용이 들지만 다음 업무의 재사용·수정 비용이 줄어듭니다</small></h3>
-      <div class="cards3">${(Object.keys(EV3_LEVEL) as Ev3Level[]).map((k) => `<article class="choice-card ${d.ev3_level === k ? 'chosen' : ''}"><p class="tagline">${k}</p><h4>${EV3_LEVEL[k].label}</h4><p>${EV3_LEVEL[k].note}</p>${costChip(EV3_LEVEL[k].cost, s)}
+      <div class="cards3">${(Object.keys(EV3_LEVEL) as Ev3Level[]).map((k) => `<article class="choice-card ${d.ev3_level === k ? 'chosen' : ''}">${icon({ '1': '📄', '2': '📘', '3': '🧰' }[k])}<p class="tagline">${k}</p><h4>${EV3_LEVEL[k].label}</h4><p>${EV3_LEVEL[k].note}</p>${costChip(EV3_LEVEL[k].cost, s)}
         ${done('ev3_level') ? (d.ev3_level === k ? '<span class="tag ok">선택함</span>' : '') : `<button type="button" class="btn primary" data-level="${k}" data-testid="ev3-level-${k}" ${done('ev3_version') ? '' : 'disabled'}>선택</button>`}</article>`).join('')}</div></section>`;
 
     // 3. 저장 위치·열람 범위
@@ -49,7 +51,7 @@ export const ev3Scene: Scene = {
     const canS4 = done('ev3_storage');
     const s4 = `<section class="${stepCls('ev3_pii', canS4)}"><h3 class="step-t">4. 함께 올릴 운영 명단 <small class="muted">미리보기와 정보 등급을 먼저 확인할 수 있어요</small></h3>
       <div class="vfile"><span class="ficon">📊</span><div><b>운영명단_원본.xlsx</b><small>총무팀에서 받은 파일 · <span class="tag danger">정보 등급: 대외비 · 개인정보 포함</span></small></div><button type="button" class="btn small ghost" data-roster data-testid="ev3-roster">미리보기</button></div>
-      <div class="cards3">${(Object.keys(EV3_PII) as Ev3Pii[]).map((k) => `<article class="choice-card ${d.ev3_pii === k ? 'chosen' : ''}"><h4>${EV3_PII[k].label}</h4><p>${EV3_PII[k].note}</p>${costChip(EV3_PII[k].cost, s)}
+      <div class="cards3">${(Object.keys(EV3_PII) as Ev3Pii[]).map((k) => `<article class="choice-card ${d.ev3_pii === k ? 'chosen' : ''}">${icon({ team: '👥', clean: '✂️', company: '🌐' }[k])}<h4>${EV3_PII[k].label}</h4><p>${EV3_PII[k].note}</p>${costChip(EV3_PII[k].cost, s)}
         ${done('ev3_pii') ? (d.ev3_pii === k ? '<span class="tag ok">선택함</span>' : '') : `<button type="button" class="btn primary" data-pii="${k}" data-testid="ev3-pii-${k}" ${canS4 ? '' : 'disabled'}>선택</button>`}</article>`).join('')}</div></section>`;
 
     // 5. 키 문자열 (정리 수준 3일 때만)

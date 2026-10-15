@@ -142,7 +142,7 @@ export class OfficeMap {
   }
 
   private key(e: KeyboardEvent, down: boolean) {
-    if (this.done || document.getElementById('modal-root')?.innerHTML) return;
+    if (this.done || document.getElementById('modal-root')?.innerHTML || document.getElementById('cutscene')) return;
     const tag = (e.target as HTMLElement)?.tagName;
     if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
     const dir = KEYS[e.key];

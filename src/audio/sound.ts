@@ -121,8 +121,23 @@ export class SoundManager {
     o.stop(t + 0.2);
   }
 
+  /** 타자기 '타닥' 소리: 짧은 잡음 + 낮은 '톡' */
+  typeTick() {
+    if (!this.ctx || !this.sfxOn || !this.sfxGain) return;
+    const t = this.ctx.currentTime + 0.005;
+    this.noise(t, 0.022 + Math.random() * 0.012, 0.55, 2200 + Math.random() * 2200, this.sfxGain);
+    const o = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    o.frequency.setValueAtTime(190 + Math.random() * 60, t);
+    g.gain.setValueAtTime(0.25, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+    o.connect(g).connect(this.sfxGain);
+    o.start(t);
+    o.stop(t + 0.04);
+  }
+
   private noiseBuf: AudioBuffer | null = null;
-  private noise(t: number, dur: number, vol: number, hp: number) {
+  private noise(t: number, dur: number, vol: number, hp: number, out?: AudioNode) {
     const ctx = this.ctx!;
     if (!this.noiseBuf) {
       this.noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
@@ -137,7 +152,7 @@ export class SoundManager {
     const g = ctx.createGain();
     g.gain.setValueAtTime(vol, t);
     g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-    src.connect(f).connect(g).connect(this.bgmGain!);
+    src.connect(f).connect(g).connect(out || this.bgmGain!);
     src.start(t);
     src.stop(t + dur + 0.02);
   }

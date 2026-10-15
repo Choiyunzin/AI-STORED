@@ -38,6 +38,13 @@ export function costChip(c: Cost, s?: GameState): string {
   return `<span class="costs" aria-label="예상 비용: ${costText(c)}">${parts.join('')}${warn}</span>`;
 }
 
+/** 장면 안의 단계 진행 표시 (현재 단계 강조) */
+export function stepper(labels: string[], cur: number): string {
+  return `<ol class="wstep">${labels.map((l, i) => `<li class="${i < cur ? 'done' : i === cur ? 'cur' : ''}"><span>${i < cur ? '✓' : i + 1}</span>${l}</li>`).join('<li class="sep" aria-hidden="true"></li>')}</ol>`;
+}
+
+export const icon = (e: string) => `<div class="cc-icon" aria-hidden="true">${e}</div>`;
+
 export function sceneHeader(kicker: string, title: string, sub: string): string {
   return `<header class="scene-h"><p class="kicker">${kicker}</p><h1 tabindex="-1" class="scene-title">${title}</h1><p class="sub">${sub}</p></header>`;
 }

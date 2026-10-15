@@ -22,6 +22,7 @@ export function buildShell(app: HTMLElement) {
     </div>
     <div class="top-btns">
       <button type="button" class="btn icon" id="btn-mute" title="음성 켜기/끄기 (M)" aria-pressed="false">🔊</button>
+      <button type="button" class="btn icon" id="btn-help" title="게임 방법 다시 보기">❓</button>
       <button type="button" class="btn icon" id="btn-settings" title="음성·소리 설정">⚙</button>
       <button type="button" class="btn icon only-narrow" id="btn-left" title="메신저 열기">💬</button>
       <button type="button" class="btn icon only-mid" id="btn-right" title="파일함 열기">🗂</button>

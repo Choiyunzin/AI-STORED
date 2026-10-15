@@ -72,6 +72,11 @@ const click = async (page, testid) => {
   }
   await loc.click();
 };
+const skipCut = async (pg) => {
+  const b = pg.locator('[data-testid=cut-skip]');
+  await b.waitFor({ timeout: 4000 }).then(() => b.click()).catch(() => {});
+  await pg.waitForTimeout(450);
+};
 const passMap = async (page) => {
   await page.waitForSelector('[data-testid=map-skip]', { timeout: 5000 });
   await page.locator('[data-testid=map-skip]').click();
@@ -88,7 +93,7 @@ const finishDialogue = async (page) => {
 };
 
 async function playPath(page, p, shotPrefix) {
-  await click(page, p.audio === 'subtitle' ? 'start-subtitle' : 'start-voice');
+  await click(page, p.audio === 'subtitle' ? 'start-subtitle' : 'start-voice'); await skipCut(page);
   await page.waitForSelector('[data-testid=map-skip]');
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForSelector('[data-testid=start-work]');
@@ -195,10 +200,37 @@ for (const [i, p] of PATHS.entries()) {
   await ctx.close();
 }
 
+// 도입 컷신: 타자기 효과, 클릭으로 즉시 완성, 규칙 설명, 건너뛰기
+try {
+  const { page, ctx, errors } = await newPage();
+  await page.locator('[data-testid=start-voice]').click();
+  await page.waitForSelector('#cutscene');
+  await page.waitForTimeout(250);
+  const partial = await page.locator('.cut-text p').first().innerText();
+  check('컷신: 타자기처럼 한 글자씩 나옴', partial.length > 0 && partial.length < '다음 주 월요일, 신입사원 30명이 입사합니다.'.length, `"${partial}"`);
+  check('컷신: TTS로 읽지 않음', (await page.evaluate(() => window.__ttsLog.texts.length)) === 0);
+  await page.screenshot({ path: `${SHOTS}cut-1.png` });
+  await page.locator('[data-testid=cut-next]').click();
+  check('컷신: 클릭하면 문장 즉시 완성', (await page.locator('.cut-text').innerText()).includes('운영 준비가 아직 남았어요'));
+  for (let i = 0; i < 5; i++) { await page.locator('[data-testid=cut-next]').click(); await page.waitForTimeout(80); }
+  await page.waitForTimeout(1500);
+  const txt = await page.locator('.cut-card').innerText();
+  check('컷신: 작업 여유 규칙 설명', /작업 여유/.test(txt), txt.split('\n')[1]);
+  await page.screenshot({ path: `${SHOTS}cut-rule.png` });
+  await page.locator('[data-testid=cut-skip]').click();
+  await page.waitForSelector('.map-world', { timeout: 5000 });
+  check('컷신: 건너뛰면 탐색 화면 시작', true);
+  await page.locator('#btn-help').click();
+  check('컷신: ❓로 규칙 다시 보기', await page.locator('#cutscene').count() === 1);
+  await page.keyboard.press('Escape');
+  check('컷신: 콘솔 오류 없음', errors.length === 0, errors.join(' | '));
+  await ctx.close();
+} catch (e) { check('컷신 진행', false, String(e).split('\n')[0]); }
+
 // 탐색 화면: 방향키 이동, 가까이 가면 대화, 자리 도착 시 업무 화면
 try {
   const { page, ctx, errors } = await newPage();
-  await click(page, 'start-voice');
+  await click(page, 'start-voice'); await skipCut(page);
   await page.waitForSelector('.map-world');
   await page.waitForTimeout(700);
   await page.screenshot({ path: `${SHOTS}map-intro.png` });
@@ -240,7 +272,7 @@ try {
 // 음성 동작: 입 모양·다시 듣기·음소거·설정의 실제 배정 표시
 {
   const { page, ctx, errors } = await newPage();
-  await click(page, 'start-voice');
+  await click(page, 'start-voice'); await skipCut(page);
   await page.waitForSelector('.map-world');
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForTimeout(700);
@@ -273,7 +305,7 @@ try {
 // 한국어 음성이 없는 PC
 {
   const { page, ctx, errors } = await newPage({ voices: [{ name: 'English', lang: 'en-US', localService: true, voiceURI: 'en' }] });
-  await click(page, 'start-voice');
+  await click(page, 'start-voice'); await skipCut(page);
   await page.waitForSelector('.map-world');
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForTimeout(1200);
@@ -299,7 +331,7 @@ try {
   p2.on('pageerror', (e) => errs.push(String(e)));
   await p2.addInitScript(() => { delete window.speechSynthesis; Object.defineProperty(window, 'speechSynthesis', { value: undefined }); });
   await p2.goto(BASE_URL);
-  await click(p2, 'start-voice');
+  await click(p2, 'start-voice'); await skipCut(p2);
   await p2.waitForSelector('.map-world');
   await p2.locator('[data-testid=map-skip]').click();
   await p2.waitForTimeout(800);
@@ -314,7 +346,7 @@ try {
 // 음성 파일 누락: manifest 에는 있는데 파일이 없음 → TTS 로 대체
 {
   const { page, ctx, errors } = await newPage({ manifest: ['hong/intro_hong_01.mp3'] });
-  await click(page, 'start-voice');
+  await click(page, 'start-voice'); await skipCut(page);
   await page.waitForSelector('.map-world');
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForTimeout(1500);
@@ -327,7 +359,7 @@ try {
 // 새로고침 이어하기 + 중복 클릭 + 재시작
 {
   const { page, ctx, errors } = await newPage();
-  await click(page, 'start-subtitle');
+  await click(page, 'start-subtitle'); await skipCut(page);
   await finishDialogue(page);
   await click(page, 'start-work');
   await click(page, 'ev1-A-human');
@@ -344,7 +376,7 @@ try {
   check('새로고침: 상태·산출물 유지', s2.scene === 'ev1' && s2.files.length === 2 && s2.slack === s1.slack);
   check('새로고침: 결과 화면 복원', await page.locator('[data-testid=to-ev2]').count() === 1);
   await page.reload();
-  await click(page, 'start-voice');
+  await click(page, 'start-voice'); await skipCut(page);
   const s3 = await page.evaluate(() => window.__axgame.state);
   check('처음부터 다시: 상태 초기화', s3.scene === 'intro' && s3.files.length === 0 && s3.slack === 18 && s3.ai === 100);
   check('이어하기/재시작: 콘솔 오류 없음', errors.length === 0, errors.join(' | '));
@@ -354,7 +386,7 @@ try {
 // 키보드만으로 진행 + 작은 화면
 {
   const { page, ctx, errors } = await newPage({ viewport: { width: 390, height: 844 } });
-  await click(page, 'start-subtitle');
+  await click(page, 'start-subtitle'); await skipCut(page);
   await page.waitForSelector('.map-world');
   await page.locator('[data-testid=map-skip]').click();
   await page.waitForSelector('.scene-title');

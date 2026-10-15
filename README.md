@@ -21,7 +21,7 @@ npm run preview    # 빌드 결과 미리보기
 
 ```bash
 npm test           # 로직 단위 테스트: 4,000+ 선택 경로 시뮬레이션 + 개별 규칙 10개
-npm run build && npm run e2e   # 브라우저 종단 테스트 (Playwright + Chromium, 51개 항목)
+npm run build && npm run e2e   # 브라우저 종단 테스트 (Playwright + Chromium, 58개 항목)
 ```
 
 `npm run e2e`는 Chromium 실행 파일을 `/opt/pw-browsers/chromium`에서 찾습니다. 다른 위치라면 `CHROME=/path/to/chrome npm run e2e`. 결과 스크린샷은 `tests/screens/`에 저장됩니다(커밋 제외). 검증 결과는 [docs/VERIFICATION.md](docs/VERIFICATION.md).
@@ -30,6 +30,7 @@ npm run build && npm run e2e   # 브라우저 종단 테스트 (Playwright + Chr
 
 | 단계 | 내용 | 주요 결정 |
 | --- | --- | --- |
+| 도입 컷신 | 타자기 효과(타닥 소리, 음성 없음)로 상황·작업 여유·AI 이용권·게임 방법 설명. 클릭하면 문장 즉시 완성, 건너뛰기 가능, 상단 ❓로 다시 보기 | — |
 | 도입 | D-7, 할 일과 자원 확인 | — |
 | 사건 ① AI를 어디에 쓸까? | 안내문 3줄 수정 / 자유응답 300건 분석 | 업무별 처리 방식(드래그 또는 버튼), AI에 넘길 자료 범위 |
 | 사건 ② 무엇을 위한 도구지? | HTML 첫날 안내 도구 | 일하는 방식(즉시 시제품 / 미니 PRD / 기존 도구 재사용), AI 흐름 3개 연결(자료·작성 시점·검증), 응답 수집 경로 |
