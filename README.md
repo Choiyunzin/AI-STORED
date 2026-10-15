@@ -6,6 +6,11 @@
 
 AI를 많이 쓰면 이기는 게임이 아닙니다. 세 줄 수정은 사람이 직접 하는 편이 낫고, 300건 분석은 AI 초안 + 원문 확인이 낫고, 조건이 많은 도구는 요구사항 정리가 도움이 됩니다. 모든 선택은 비용·산출물 상태·후속 사건·회고에 실제로 반영됩니다.
 
+## 바로 플레이 (설치 없이)
+
+**https://choiyunzin.github.io/AI-STORED/** — GitHub Pages로 자동 배포됩니다 (`.github/workflows/deploy-pages.yml`).
+처음 한 번만 저장소 **Settings → Pages → Build and deployment → Source: GitHub Actions** 로 설정하세요. 이후 푸시할 때마다 자동으로 갱신됩니다.
+
 ## 실행
 
 ```bash
